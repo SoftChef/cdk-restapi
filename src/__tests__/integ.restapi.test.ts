@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+// import * as fs from 'fs';
 import * as path from 'path';
 import { SynthUtils } from '@aws-cdk/assert';
 import '@aws-cdk/assert/jest';
@@ -8,16 +8,15 @@ import * as cdk from '@aws-cdk/core';
 import { RestApi, HttpMethod } from '../index';
 
 const LAMBDA_ASSETS_PATH = path.resolve(__dirname, '../../src/lambda-assets');
-console.log('__dirname', __dirname);
 
 test('minimal usage', () => {
   // GIVEN
   const app = new cdk.App();
   const stack = new cdk.Stack(app, 'demo-stack');
-  console.log(`${LAMBDA_ASSETS_PATH}`, fs.readdirSync(`${LAMBDA_ASSETS_PATH}`));
-  console.log(`${LAMBDA_ASSETS_PATH}/articles`, fs.readdirSync(`${LAMBDA_ASSETS_PATH}/articles`));
-  console.log(`${LAMBDA_ASSETS_PATH}/articles/get-articles`, fs.readdirSync(`${LAMBDA_ASSETS_PATH}/articles/get-articles`));
-  console.log('File exists:', `${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`, fs.existsSync(`${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`));
+  // console.log(`${LAMBDA_ASSETS_PATH}`, fs.readdirSync(`${LAMBDA_ASSETS_PATH}`));
+  // console.log(`${LAMBDA_ASSETS_PATH}/articles`, fs.readdirSync(`${LAMBDA_ASSETS_PATH}/articles`));
+  // console.log(`${LAMBDA_ASSETS_PATH}/articles/get-articles`, fs.readdirSync(`${LAMBDA_ASSETS_PATH}/articles/get-articles`));
+  // console.log('File exists:', `${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`, fs.existsSync(`${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`));
   new RestApi(stack, 'test-api', {
     resources: [
       {
@@ -29,17 +28,15 @@ test('minimal usage', () => {
           bundling: {
             forceDockerBundling: true,
             commandHooks: {
-              beforeInstall(inputDir: string, outputDir: string) {
-                console.log('beforeInstall', inputDir, outputDir);
+              beforeInstall() {
                 return [];
               },
               beforeBundling(inputDir: string, outputDir: string) {
-                console.log('beforeBundling', inputDir, outputDir, __dirname);
-                console.log(fs.readdirSync(__dirname));
-                return ['ls -al'];
+                console.log('beforeBundling', inputDir, outputDir);
+                // console.log(fs.readdirSync(`.${inputDir}`));
+                return ['ls -al /asset-input', `ls -al /${inputDir}/src/lambda-assets/articles/get-articles`];
               },
-              afterBundling(inputDir: string, outputDir: string) {
-                console.log('afterBundling', inputDir, outputDir);
+              afterBundling() {
                 return [];
               },
             },
