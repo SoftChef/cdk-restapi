@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import * as path from 'path';
 import { SynthUtils } from '@aws-cdk/assert';
 import '@aws-cdk/assert/jest';
@@ -12,13 +13,14 @@ test('minimal usage', () => {
   // GIVEN
   const app = new cdk.App();
   const stack = new cdk.Stack(app, 'demo-stack');
+  console.log('Exists', fs.existsSync(`${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`));
   new RestApi(stack, 'test-api', {
     resources: [
       {
         path: '/articles',
         httpMethod: HttpMethod.GET,
         lambdaFunction: new lambda.NodejsFunction(stack, 'GetArticles', {
-          entry: `${LAMBDA_ASSETS_PATH}/articles/get-articles/app.js`,
+          entry: `${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`,
         }),
       },
       {
@@ -26,21 +28,21 @@ test('minimal usage', () => {
         httpMethod: HttpMethod.POST,
         authorizationType: apigateway.AuthorizationType.IAM,
         lambdaFunction: new lambda.NodejsFunction(stack, 'CreateArticle', {
-          entry: `${LAMBDA_ASSETS_PATH}/articles/create-article/app.js`,
+          entry: `${LAMBDA_ASSETS_PATH}/articles/create-article/app.ts`,
         }),
       },
       {
         path: '/articles/{articleId}',
         httpMethod: HttpMethod.GET,
         lambdaFunction: new lambda.NodejsFunction(stack, 'GetArticle', {
-          entry: `${LAMBDA_ASSETS_PATH}/articles/get-article/app.js`,
+          entry: `${LAMBDA_ASSETS_PATH}/articles/get-article/app.ts`,
         }),
       },
       {
         path: '/authors',
         httpMethod: HttpMethod.GET,
         lambdaFunction: new lambda.NodejsFunction(stack, 'GetAuthors', {
-          entry: `${LAMBDA_ASSETS_PATH}/authors/get-authors/app.js`,
+          entry: `${LAMBDA_ASSETS_PATH}/authors/get-authors/app.ts`,
         }),
       },
     ],
