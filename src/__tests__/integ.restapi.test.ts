@@ -1,9 +1,12 @@
+import * as path from 'path';
 import { SynthUtils } from '@aws-cdk/assert';
 import '@aws-cdk/assert/jest';
 import * as apigateway from '@aws-cdk/aws-apigateway';
 import * as lambda from '@aws-cdk/aws-lambda-nodejs';
 import * as cdk from '@aws-cdk/core';
 import { RestApi, HttpMethod } from '../index';
+
+const APP_PATH = path.resolve(process.env.PWD, 'src/demo');
 
 test('minimal usage', () => {
   // GIVEN
@@ -15,7 +18,7 @@ test('minimal usage', () => {
         path: '/articles',
         httpMethod: HttpMethod.GET,
         lambdaFunction: new lambda.NodejsFunction(stack, 'GetArticles', {
-          entry: './src/demo/articles/get-articles/app.js',
+          entry: `${APP_PATH}/articles/get-articles/app.js`,
         }),
       },
       {
@@ -23,21 +26,21 @@ test('minimal usage', () => {
         httpMethod: HttpMethod.POST,
         authorizationType: apigateway.AuthorizationType.IAM,
         lambdaFunction: new lambda.NodejsFunction(stack, 'CreateArticle', {
-          entry: './src/demo/articles/create-article/app.js',
+          entry: `${APP_PATH}/articles/create-article/app.js`,
         }),
       },
       {
         path: '/articles/{articleId}',
         httpMethod: HttpMethod.GET,
         lambdaFunction: new lambda.NodejsFunction(stack, 'GetArticle', {
-          entry: './src/demo/articles/get-article/app.js',
+          entry: `${APP_PATH}/articles/get-article/app.js`,
         }),
       },
       {
         path: '/authors',
         httpMethod: HttpMethod.GET,
         lambdaFunction: new lambda.NodejsFunction(stack, 'GetAuthors', {
-          entry: './src/demo/authors/get-authors/app.js',
+          entry: `${APP_PATH}/authors/get-authors/app.js`,
         }),
       },
     ],
