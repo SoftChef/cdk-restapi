@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as fs from 'fs';
 import { SynthUtils } from '@aws-cdk/assert';
 import '@aws-cdk/assert/jest';
 import * as apigateway from '@aws-cdk/aws-apigateway';
@@ -7,7 +8,8 @@ import * as cdk from '@aws-cdk/core';
 import { RestApi, HttpMethod } from '../index';
 
 const APP_PATH = path.resolve(__dirname, '../../src/demo');
-
+console.log(APP_PATH);
+console.log(fs.readdirSync(APP_PATH));
 test('minimal usage', () => {
   // GIVEN
   const app = new cdk.App();
