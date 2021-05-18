@@ -7,13 +7,16 @@ import * as lambda from '@aws-cdk/aws-lambda-nodejs';
 import * as cdk from '@aws-cdk/core';
 import { RestApi, HttpMethod } from '../index';
 
-const LAMBDA_ASSETS_PATH = path.resolve(__dirname, '../lambda-assets');
+const LAMBDA_ASSETS_PATH = path.resolve(__dirname, '../../lambda-assets');
 
 test('minimal usage', () => {
   // GIVEN
   const app = new cdk.App();
   const stack = new cdk.Stack(app, 'demo-stack');
-  console.log('Exists', fs.existsSync(`${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`));
+  console.log(`${LAMBDA_ASSETS_PATH}`, fs.readdirSync(`${LAMBDA_ASSETS_PATH}`));
+  console.log(`${LAMBDA_ASSETS_PATH}/articles`, fs.readdirSync(`${LAMBDA_ASSETS_PATH}/articles`));
+  console.log(`${LAMBDA_ASSETS_PATH}/articles/get-articles`, fs.readdirSync(`${LAMBDA_ASSETS_PATH}/articles/get-articles`));
+  console.log('File exists:', `${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`, fs.existsSync(`${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`));
   new RestApi(stack, 'test-api', {
     resources: [
       {
