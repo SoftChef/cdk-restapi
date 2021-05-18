@@ -7,7 +7,8 @@ import * as lambda from '@aws-cdk/aws-lambda-nodejs';
 import * as cdk from '@aws-cdk/core';
 import { RestApi, HttpMethod } from '../index';
 
-const LAMBDA_ASSETS_PATH = path.resolve(__dirname, '../../lambda-assets');
+const LAMBDA_ASSETS_PATH = path.resolve(__dirname, '../../src/lambda-assets');
+console.log('__dirname', __dirname);
 
 test('minimal usage', () => {
   // GIVEN
