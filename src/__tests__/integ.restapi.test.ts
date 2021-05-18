@@ -34,7 +34,7 @@ test('minimal usage', () => {
               beforeBundling(inputDir: string, outputDir: string) {
                 console.log('beforeBundling', inputDir, outputDir);
                 // console.log(fs.readdirSync(`.${inputDir}`));
-                return ['ls -al /asset-input', `ls -al ${inputDir}/src/lambda-assets/articles/get-articles`];
+                return ['ls -l', 'ls -l /', `ls -l ${inputDir}/src/lambda-assets/articles/get-articles`];
               },
               afterBundling() {
                 return [];
