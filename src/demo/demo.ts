@@ -6,7 +6,7 @@ import { RestApi, HttpMethod } from '../index';
 const app = new cdk.App();
 const stack = new cdk.Stack(app, 'sccdk-rest-api-demo');
 
-const LAMBDA_ASSETS_PATH = path.join(__dirname, '../../lambda-assets');
+const LAMBDA_ASSETS_PATH = path.join(__dirname, '../../src/lambda-assets');
 
 const demoRestApi = new RestApi(stack, 'RestApiDemo', {
   resources: [

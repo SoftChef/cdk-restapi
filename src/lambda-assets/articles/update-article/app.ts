@@ -1,8 +1,8 @@
-export async function handler(event: any) {
+export async function handler() {
   return {
     statusCode: 200,
     body: JSON.stringify({
-      created: true,
+      updated: true,
     }),
   };
 }

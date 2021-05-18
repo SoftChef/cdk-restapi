@@ -1,6 +1,6 @@
-import authors from '../../seeds/authors.json';
+import * as authors from '../../seeds/authors';
 
-export async function handler(event: any) {
+export async function handler() {
   return {
     statusCode: 200,
     body: JSON.stringify({

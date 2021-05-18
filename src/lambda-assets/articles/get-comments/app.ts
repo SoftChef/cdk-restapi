@@ -1,6 +1,6 @@
-import comments from '../../seeds/comments.json';
+import comments from '../../seeds/comments';
 
-export async function handler(event: any) {
+export async function handler() {
   return {
     statusCode: 200,
     body: JSON.stringify({

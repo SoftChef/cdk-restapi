@@ -1,9 +1,9 @@
-import authors from '../../seeds/authors.json';
+import authors from '../../seeds/authors';
 
 export async function handler(event: any) {
   const pathParameters = event.pathParameters || {};
   const authorId = pathParameters.authorId;
-  const author = authors.find(author => author.id === authorId);
+  const author = authors.find((item: any) => item.id === authorId);
   if (author) {
     return {
       statusCode: 200,
