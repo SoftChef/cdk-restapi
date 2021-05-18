@@ -86,7 +86,7 @@ new RestApi(scope: Construct, id: string, props: RestApiProps)
 * **id** (<code>string</code>)  *No description*
 * **props** (<code>[RestApiProps](#sccdk-restapi-restapiprops)</code>)  *No description*
   * **resources** (<code>Array<[RestApiResourceProps](#sccdk-restapi-restapiresourceprops)></code>)  Define Rest API resources. 
-  * **addCorsPreflight** (<code>boolean</code>)  Enable cors, default is true. __*Optional*__
+  * **enableCors** (<code>boolean</code>)  Enable cors, default is true. __*Optional*__
   * **restApi** (<code>[RestApi](#aws-cdk-aws-apigateway-restapi)</code>)  Custom RestApi. __*Optional*__
 
 
@@ -112,7 +112,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **resources** | <code>Array<[RestApiResourceProps](#sccdk-restapi-restapiresourceprops)></code> | Define Rest API resources.
-**addCorsPreflight**? | <code>boolean</code> | Enable cors, default is true.<br/>__*Optional*__
+**enableCors**? | <code>boolean</code> | Enable cors, default is true.<br/>__*Optional*__
 **restApi**? | <code>[RestApi](#aws-cdk-aws-apigateway-restapi)</code> | Custom RestApi.<br/>__*Optional*__
 
 

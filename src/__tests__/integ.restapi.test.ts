@@ -6,7 +6,7 @@ import * as lambda from '@aws-cdk/aws-lambda-nodejs';
 import * as cdk from '@aws-cdk/core';
 import { RestApi, HttpMethod } from '../index';
 
-const APP_PATH = path.resolve(process.env.PWD, 'src/demo');
+const APP_PATH = path.resolve(__dirname, '../../src/demo');
 
 test('minimal usage', () => {
   // GIVEN
