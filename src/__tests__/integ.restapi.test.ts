@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 import * as path from 'path';
 import { SynthUtils } from '@aws-cdk/assert';
 import '@aws-cdk/assert/jest';
@@ -7,10 +6,8 @@ import * as lambda from '@aws-cdk/aws-lambda-nodejs';
 import * as cdk from '@aws-cdk/core';
 import { RestApi, HttpMethod } from '../index';
 
-const APP_PATH = path.resolve(__dirname, '../../src/demo');
-console.log(__dirname, APP_PATH);
-console.log(fs.readdirSync(APP_PATH), fs.readdirSync(APP_PATH + '/articles'));
-console.log(`${APP_PATH}/articles/get-articles/app.js`);
+const LAMBDA_ASSETS_PATH = path.resolve(__dirname, '../../lambda-assets');
+
 test('minimal usage', () => {
   // GIVEN
   const app = new cdk.App();
@@ -21,7 +18,7 @@ test('minimal usage', () => {
         path: '/articles',
         httpMethod: HttpMethod.GET,
         lambdaFunction: new lambda.NodejsFunction(stack, 'GetArticles', {
-          entry: `${APP_PATH}/articles/get-articles/app.js`,
+          entry: `${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`,
         }),
       },
       {
@@ -29,21 +26,21 @@ test('minimal usage', () => {
         httpMethod: HttpMethod.POST,
         authorizationType: apigateway.AuthorizationType.IAM,
         lambdaFunction: new lambda.NodejsFunction(stack, 'CreateArticle', {
-          entry: `${APP_PATH}/articles/create-article/app.js`,
+          entry: `${LAMBDA_ASSETS_PATH}/articles/create-article/app.ts`,
         }),
       },
       {
         path: '/articles/{articleId}',
         httpMethod: HttpMethod.GET,
         lambdaFunction: new lambda.NodejsFunction(stack, 'GetArticle', {
-          entry: `${APP_PATH}/articles/get-article/app.js`,
+          entry: `${LAMBDA_ASSETS_PATH}/articles/get-article/app.ts`,
         }),
       },
       {
         path: '/authors',
         httpMethod: HttpMethod.GET,
         lambdaFunction: new lambda.NodejsFunction(stack, 'GetAuthors', {
-          entry: `${APP_PATH}/authors/get-authors/app.js`,
+          entry: `${LAMBDA_ASSETS_PATH}/authors/get-authors/app.ts`,
         }),
       },
     ],
