@@ -6,7 +6,7 @@ import * as lambda from '@aws-cdk/aws-lambda-nodejs';
 import * as cdk from '@aws-cdk/core';
 import { RestApi, HttpMethod } from '../index';
 
-const LAMBDA_ASSETS_PATH = path.resolve(__dirname, '../../src/lambda-assets');
+const LAMBDA_ASSETS_PATH = path.resolve(__dirname, '../lambda-assets');
 
 test('minimal usage', () => {
   // GIVEN
@@ -18,7 +18,7 @@ test('minimal usage', () => {
         path: '/articles',
         httpMethod: HttpMethod.GET,
         lambdaFunction: new lambda.NodejsFunction(stack, 'GetArticles', {
-          entry: `${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`,
+          entry: `${LAMBDA_ASSETS_PATH}/articles/get-articles/app.js`,
         }),
       },
       {
@@ -26,21 +26,21 @@ test('minimal usage', () => {
         httpMethod: HttpMethod.POST,
         authorizationType: apigateway.AuthorizationType.IAM,
         lambdaFunction: new lambda.NodejsFunction(stack, 'CreateArticle', {
-          entry: `${LAMBDA_ASSETS_PATH}/articles/create-article/app.ts`,
+          entry: `${LAMBDA_ASSETS_PATH}/articles/create-article/app.js`,
         }),
       },
       {
         path: '/articles/{articleId}',
         httpMethod: HttpMethod.GET,
         lambdaFunction: new lambda.NodejsFunction(stack, 'GetArticle', {
-          entry: `${LAMBDA_ASSETS_PATH}/articles/get-article/app.ts`,
+          entry: `${LAMBDA_ASSETS_PATH}/articles/get-article/app.js`,
         }),
       },
       {
         path: '/authors',
         httpMethod: HttpMethod.GET,
         lambdaFunction: new lambda.NodejsFunction(stack, 'GetAuthors', {
-          entry: `${LAMBDA_ASSETS_PATH}/authors/get-authors/app.ts`,
+          entry: `${LAMBDA_ASSETS_PATH}/authors/get-authors/app.js`,
         }),
       },
     ],
