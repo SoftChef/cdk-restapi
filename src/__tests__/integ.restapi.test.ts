@@ -25,6 +25,24 @@ test('minimal usage', () => {
         httpMethod: HttpMethod.GET,
         lambdaFunction: new lambda.NodejsFunction(stack, 'GetArticles', {
           entry: `${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`,
+          bundling: {
+            forceDockerBundling: true,
+            commandHooks: {
+              beforeInstall(inputDir: string, outputDir: string) {
+                console.log('beforeInstall', inputDir, outputDir);
+                return ['a'];
+              },
+              beforeBundling(inputDir: string, outputDir: string) {
+                console.log('beforeBundling', inputDir, outputDir);
+                console.log(fs.readdirSync(__dirname));
+                return ['b'];
+              },
+              afterBundling(inputDir: string, outputDir: string) {
+                console.log('afterBundling', inputDir, outputDir);
+                return ['c'];
+              },
+            },
+          },
         }),
       },
       {
