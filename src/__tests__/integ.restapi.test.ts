@@ -20,7 +20,7 @@ test('minimal usage', () => {
         httpMethod: HttpMethod.GET,
         lambdaFunction: new lambda.NodejsFunction(stack, 'GetArticles', {
           // entry: `${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`,
-          entry: './src/lambda-assets/articles/get-articles/app.ts',
+          entry: './lambda-assets/articles/get-articles/app.ts',
           bundling: {
             forceDockerBundling: true,
             commandHooks: {
