@@ -25,7 +25,7 @@ test('minimal usage', () => {
             forceDockerBundling: true,
             commandHooks: {
               beforeInstall() {
-                return [];
+                return ['ls -l /asset-input'];
               },
               beforeBundling(inputDir: string, outputDir: string) {
                 console.log('beforeBundling', inputDir, outputDir);
@@ -33,7 +33,7 @@ test('minimal usage', () => {
                 return ['ls -l /asset-input']; //, `ls -l ${inputDir}/src/lambda-assets/articles/get-articles`];
               },
               afterBundling() {
-                return [];
+                return ['ls -l /asset-input'];
               },
             },
           },
