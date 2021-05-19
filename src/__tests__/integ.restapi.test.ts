@@ -102,7 +102,6 @@ test('minimal usage', () => {
   expect(SynthUtils.synthesize(stack).template).toMatchSnapshot();
   expect(stack).toHaveResourceLike('AWS::ApiGateway::RestApi', {
     Name: 'test-api',
-
   });
   expect(stack).toHaveResourceLike('AWS::ApiGateway::Resource', {
     PathPart: 'articles',
