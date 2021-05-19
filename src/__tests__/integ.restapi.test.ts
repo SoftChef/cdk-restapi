@@ -3,9 +3,9 @@
 import { SynthUtils } from '@aws-cdk/assert';
 import '@aws-cdk/assert/jest';
 // import * as apigateway from '@aws-cdk/aws-apigateway';
-// import * as lambda from '@aws-cdk/aws-lambda-nodejs';
+import * as lambda from '@aws-cdk/aws-lambda-nodejs';
 import * as cdk from '@aws-cdk/core';
-import { RestApi } from '../index';
+import { RestApi, HttpMethod } from '../index';
 
 // const LAMBDA_ASSETS_PATH = path.resolve(__dirname, '../../src/lambda-assets');
 
@@ -13,36 +13,32 @@ test('minimal usage', () => {
   // GIVEN
   const app = new cdk.App();
   const stack = new cdk.Stack(app, 'demo-stack');
-  // console.log(`${LAMBDA_ASSETS_PATH}`, fs.readdirSync(`${LAMBDA_ASSETS_PATH}`));
-  // console.log(`${LAMBDA_ASSETS_PATH}/articles`, fs.readdirSync(`${LAMBDA_ASSETS_PATH}/articles`));
-  // console.log(`${LAMBDA_ASSETS_PATH}/articles/get-articles`, fs.readdirSync(`${LAMBDA_ASSETS_PATH}/articles/get-articles`));
-  // console.log('File exists:', `${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`, fs.existsSync(`${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`));
   new RestApi(stack, 'test-api', {
     resources: [
-    //   {
-    //     path: '/articles',
-    //     httpMethod: HttpMethod.GET,
-    //     lambdaFunction: new lambda.NodejsFunction(stack, 'GetArticles', {
-    //       // entry: `${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`,
-    //       entry: './src/lambda-assets/articles/get-articles/app.ts',
-    //       bundling: {
-    //         forceDockerBundling: true,
-    //         commandHooks: {
-    //           beforeInstall() {
-    //             return [];
-    //           },
-    //           beforeBundling(inputDir: string, outputDir: string) {
-    //             console.log('beforeBundling', inputDir, outputDir);
-    //             // console.log(fs.readdirSync(`.${inputDir}`));
-    //             return ['ls -l', 'ls -l /', `ls -l ${inputDir}/src/lambda-assets/articles/get-articles`];
-    //           },
-    //           afterBundling() {
-    //             return [];
-    //           },
-    //         },
-    //       },
-    //     }),
-    //   },
+      {
+        path: '/articles',
+        httpMethod: HttpMethod.GET,
+        lambdaFunction: new lambda.NodejsFunction(stack, 'GetArticles', {
+          // entry: `${LAMBDA_ASSETS_PATH}/articles/get-articles/app.ts`,
+          entry: './src/lambda-assets/articles/get-articles/app.ts',
+          bundling: {
+            forceDockerBundling: true,
+            commandHooks: {
+              beforeInstall() {
+                return [];
+              },
+              beforeBundling(inputDir: string, outputDir: string) {
+                console.log('beforeBundling', inputDir, outputDir);
+                // console.log(fs.readdirSync(`.${inputDir}`));
+                return ['ls -l', 'ls -l /asset-input', `ls -l ${inputDir}/src/lambda-assets/articles/get-articles`];
+              },
+              afterBundling() {
+                return [];
+              },
+            },
+          },
+        }),
+      },
     //   {
     //     path: '/articles',
     //     httpMethod: HttpMethod.POST,
