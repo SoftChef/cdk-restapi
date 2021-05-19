@@ -31,6 +31,242 @@ Object {
     },
   },
   "Resources": Object {
+    "CreateArticle624F3F33": Object {
+      "DependsOn": Array [
+        "CreateArticleServiceRole383E2C89",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "ZipFile": "
+            export async function handler() {
+              return {
+                statusCode: 200,
+                body: JSON.stringify({
+                  created: true,
+                }),
+              };
+            }
+          ",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "CreateArticleServiceRole383E2C89",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "CreateArticleServiceRole383E2C89": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "GetArticle14A73EAB": Object {
+      "DependsOn": Array [
+        "GetArticleServiceRoleFC66BAFD",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "ZipFile": "
+            export async function handler() {
+              return {
+                statusCode: 200,
+                body: JSON.stringify({
+                  article: {},
+                }),
+              };
+            }
+          ",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "GetArticleServiceRoleFC66BAFD",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "GetArticleServiceRoleFC66BAFD": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "GetArticlesA7ACF4C1": Object {
+      "DependsOn": Array [
+        "GetArticlesServiceRole9BFCCB72",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "ZipFile": "
+            export async function handler() {
+              return {
+                statusCode: 200,
+                body: JSON.stringify({
+                  articles: [],
+                }),
+              };
+            }
+          ",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "GetArticlesServiceRole9BFCCB72",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "GetArticlesServiceRole9BFCCB72": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "GetAuthorsE4CEFEB0": Object {
+      "DependsOn": Array [
+        "GetAuthorsServiceRole35E54D46",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "ZipFile": "
+            export async function handler() {
+              return {
+                statusCode: 200,
+                body: JSON.stringify({
+                  authors: [],
+                }),
+              };
+            }
+          ",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "GetAuthorsServiceRole35E54D46",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "GetAuthorsServiceRole35E54D46": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
     "testapi85A023B7": Object {
       "Properties": Object {
         "Name": "test-api",
@@ -82,8 +318,18 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "testapiDeployment914C6494fca1d08875b0ff7152d36ef8245b6b94": Object {
+    "testapiDeployment914C6494e3c218f55de21e5b77c450694f544c56": Object {
       "DependsOn": Array [
+        "testapiarticlesarticleIdGET5646FA55",
+        "testapiarticlesarticleIdOPTIONS3BC3B55F",
+        "testapiarticlesarticleId55CCCAA7",
+        "testapiarticlesGET58C3C3FA",
+        "testapiarticlesOPTIONS238F105B",
+        "testapiarticlesPOST70DB0F69",
+        "testapiarticlesFD498DE1",
+        "testapiauthorsGET5E9C2DD4",
+        "testapiauthorsOPTIONSBB83FC68",
+        "testapiauthors6FAC66C5",
         "testapiOPTIONSFF62655B",
       ],
       "Properties": Object {
@@ -97,7 +343,7 @@ Object {
     "testapiDeploymentStageprodFCB742EA": Object {
       "Properties": Object {
         "DeploymentId": Object {
-          "Ref": "testapiDeployment914C6494fca1d08875b0ff7152d36ef8245b6b94",
+          "Ref": "testapiDeployment914C6494e3c218f55de21e5b77c450694f544c56",
         },
         "RestApiId": Object {
           "Ref": "testapi85A023B7",
@@ -141,6 +387,637 @@ Object {
             "testapi85A023B7",
             "RootResourceId",
           ],
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiarticlesFD498DE1": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "testapi85A023B7",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "articles",
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "testapiarticlesGET58C3C3FA": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "GetArticlesA7ACF4C1",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "testapiarticlesFD498DE1",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiarticlesGETApiPermissionTestdemostacktestapi60E4E739GETarticles37034D1D": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "GetArticlesA7ACF4C1",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testapi85A023B7",
+              },
+              "/test-invoke-stage/GET/articles",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testapiarticlesGETApiPermissiondemostacktestapi60E4E739GETarticlesAA683AA1": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "GetArticlesA7ACF4C1",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testapi85A023B7",
+              },
+              "/",
+              Object {
+                "Ref": "testapiDeploymentStageprodFCB742EA",
+              },
+              "/GET/articles",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testapiarticlesOPTIONS238F105B": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Origin,Content-Type,Fetch-Mode,Accept,X-Amz-Date,Accept-Encoding,Authorization,SyncCenter,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "testapiarticlesFD498DE1",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiarticlesPOST70DB0F69": Object {
+      "Properties": Object {
+        "AuthorizationType": "AWS_IAM",
+        "HttpMethod": "POST",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "CreateArticle624F3F33",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "testapiarticlesFD498DE1",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiarticlesPOSTApiPermissionTestdemostacktestapi60E4E739POSTarticlesAAAB859B": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "CreateArticle624F3F33",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testapi85A023B7",
+              },
+              "/test-invoke-stage/POST/articles",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testapiarticlesPOSTApiPermissiondemostacktestapi60E4E739POSTarticles00BFCD01": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "CreateArticle624F3F33",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testapi85A023B7",
+              },
+              "/",
+              Object {
+                "Ref": "testapiDeploymentStageprodFCB742EA",
+              },
+              "/POST/articles",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testapiarticlesarticleId55CCCAA7": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "testapiarticlesFD498DE1",
+        },
+        "PathPart": "{articleId}",
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "testapiarticlesarticleIdGET5646FA55": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "GetArticle14A73EAB",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "testapiarticlesarticleId55CCCAA7",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiarticlesarticleIdGETApiPermissionTestdemostacktestapi60E4E739GETarticlesarticleId6C086C29": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "GetArticle14A73EAB",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testapi85A023B7",
+              },
+              "/test-invoke-stage/GET/articles/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testapiarticlesarticleIdGETApiPermissiondemostacktestapi60E4E739GETarticlesarticleIdC4206E71": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "GetArticle14A73EAB",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testapi85A023B7",
+              },
+              "/",
+              Object {
+                "Ref": "testapiDeploymentStageprodFCB742EA",
+              },
+              "/GET/articles/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testapiarticlesarticleIdOPTIONS3BC3B55F": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Origin,Content-Type,Fetch-Mode,Accept,X-Amz-Date,Accept-Encoding,Authorization,SyncCenter,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "testapiarticlesarticleId55CCCAA7",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiauthors6FAC66C5": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "testapi85A023B7",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "authors",
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "testapiauthorsGET5E9C2DD4": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "GetAuthorsE4CEFEB0",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "testapiauthors6FAC66C5",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiauthorsGETApiPermissionTestdemostacktestapi60E4E739GETauthors1E25C606": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "GetAuthorsE4CEFEB0",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testapi85A023B7",
+              },
+              "/test-invoke-stage/GET/authors",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testapiauthorsGETApiPermissiondemostacktestapi60E4E739GETauthorsF5E506ED": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "GetAuthorsE4CEFEB0",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testapi85A023B7",
+              },
+              "/",
+              Object {
+                "Ref": "testapiDeploymentStageprodFCB742EA",
+              },
+              "/GET/authors",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testapiauthorsOPTIONSBB83FC68": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Origin,Content-Type,Fetch-Mode,Accept,X-Amz-Date,Accept-Encoding,Authorization,SyncCenter,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "testapiauthors6FAC66C5",
         },
         "RestApiId": Object {
           "Ref": "testapi85A023B7",
