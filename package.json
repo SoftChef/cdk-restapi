@@ -5,23 +5,25 @@
     "url": "https://github.com/softchef/sccdk-restapi.git"
   },
   "scripts": {
-    "projen": "npx projen",
-    "start": "npx projen start",
     "clobber": "npx projen clobber",
+    "bump": "npx projen bump",
+    "unbump": "npx projen unbump",
     "compile": "npx projen compile",
     "test:compile": "npx projen test:compile",
     "test": "npx projen test",
     "build": "npx projen build",
-    "bump": "npx projen bump",
-    "release": "npx projen release",
     "test:watch": "npx projen test:watch",
     "test:update": "npx projen test:update",
-    "projen:upgrade": "npx projen projen:upgrade",
+    "upgrade-dependencies": "npx projen upgrade-dependencies",
+    "upgrade-projen": "npx projen upgrade-projen",
+    "default": "npx projen default",
     "watch": "npx projen watch",
     "package": "npx projen package",
     "eslint": "npx projen eslint",
     "compat": "npx projen compat",
-    "docgen": "npx projen docgen"
+    "docgen": "npx projen docgen",
+    "projen": "npx projen",
+    "start": "npx projen start"
   },
   "author": {
     "name": "MinCheTsai",
@@ -29,7 +31,7 @@
     "organization": false
   },
   "devDependencies": {
-    "@aws-cdk/assert": "^1.104.0",
+    "@aws-cdk/assert": "^1.105.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^10.17.0",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
@@ -45,22 +47,23 @@
     "jsii-docgen": "^1.8.67",
     "jsii-pacmak": "^1.24.0",
     "json-schema": "^0.3.0",
-    "projen": "^0.16.42",
+    "npm-check-updates": "^11",
+    "projen": "^0.18.4",
     "standard-version": "^9",
     "typescript": "^4.2.3"
   },
   "peerDependencies": {
-    "@aws-cdk/aws-apigateway": "^1.104.0",
-    "@aws-cdk/aws-lambda": "^1.104.0",
-    "@aws-cdk/aws-lambda-nodejs": "^1.104.0",
-    "@aws-cdk/core": "^1.104.0",
+    "@aws-cdk/aws-apigateway": "^1.105.0",
+    "@aws-cdk/aws-lambda": "^1.105.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.105.0",
+    "@aws-cdk/core": "^1.105.0",
     "constructs": "^3.2.27"
   },
   "dependencies": {
-    "@aws-cdk/aws-apigateway": "^1.104.0",
-    "@aws-cdk/aws-lambda": "^1.104.0",
-    "@aws-cdk/aws-lambda-nodejs": "^1.104.0",
-    "@aws-cdk/core": "^1.104.0"
+    "@aws-cdk/aws-apigateway": "^1.105.0",
+    "@aws-cdk/aws-lambda": "^1.105.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.105.0",
+    "@aws-cdk/core": "^1.105.0"
   },
   "bundledDependencies": [],
   "keywords": [
@@ -68,7 +71,7 @@
   ],
   "main": "lib/index.js",
   "license": "Apache-2.0",
-  "version": "0.0.5",
+  "version": "0.0.0",
   "jest": {
     "testMatch": [
       "**/lib/__tests__/**/?(*.)+(spec|test).js?(x)"
