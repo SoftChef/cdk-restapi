@@ -31,7 +31,7 @@
     "organization": false
   },
   "devDependencies": {
-    "@aws-cdk/assert": "^1.105.0",
+    "@aws-cdk/assert": "^1.106.1",
     "@types/jest": "^26.0.20",
     "@types/node": "^10.17.0",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
@@ -48,22 +48,22 @@
     "jsii-pacmak": "^1.24.0",
     "json-schema": "^0.3.0",
     "npm-check-updates": "^11",
-    "projen": "^0.18.4",
+    "projen": "^0.18.12",
     "standard-version": "^9",
     "typescript": "^4.2.3"
   },
   "peerDependencies": {
-    "@aws-cdk/aws-apigateway": "^1.105.0",
-    "@aws-cdk/aws-lambda": "^1.105.0",
-    "@aws-cdk/aws-lambda-nodejs": "^1.105.0",
-    "@aws-cdk/core": "^1.105.0",
+    "@aws-cdk/aws-apigateway": "^1.106.1",
+    "@aws-cdk/aws-lambda": "^1.106.1",
+    "@aws-cdk/aws-lambda-nodejs": "^1.106.1",
+    "@aws-cdk/core": "^1.106.1",
     "constructs": "^3.2.27"
   },
   "dependencies": {
-    "@aws-cdk/aws-apigateway": "^1.105.0",
-    "@aws-cdk/aws-lambda": "^1.105.0",
-    "@aws-cdk/aws-lambda-nodejs": "^1.105.0",
-    "@aws-cdk/core": "^1.105.0"
+    "@aws-cdk/aws-apigateway": "^1.106.1",
+    "@aws-cdk/aws-lambda": "^1.106.1",
+    "@aws-cdk/aws-lambda-nodejs": "^1.106.1",
+    "@aws-cdk/core": "^1.106.1"
   },
   "bundledDependencies": [],
   "keywords": [
