@@ -7,9 +7,9 @@ The RestApi has addResource & addMethod function to create REST API routes. But 
 ## Installation
 
 ```
-  npm install sccdk-restapi
+  npm install @softchef/cdk-restapi
   // or
-  yarn add sccdk-restapi
+  yarn add @softchef/cdk-restapi
 ```
 
 ## Example
