@@ -4,20 +4,20 @@
 
 Name|Description
 ----|-----------
-[HttpMethod](#sccdk-restapi-httpmethod)|*No description*
-[RestApi](#sccdk-restapi-restapi)|*No description*
+[HttpMethod](#softchef-cdk-restapi-httpmethod)|*No description*
+[RestApi](#softchef-cdk-restapi-restapi)|*No description*
 
 
 **Structs**
 
 Name|Description
 ----|-----------
-[RestApiProps](#sccdk-restapi-restapiprops)|*No description*
-[RestApiResourceProps](#sccdk-restapi-restapiresourceprops)|*No description*
+[RestApiProps](#softchef-cdk-restapi-restapiprops)|*No description*
+[RestApiResourceProps](#softchef-cdk-restapi-restapiresourceprops)|*No description*
 
 
 
-## class HttpMethod  <a id="sccdk-restapi-httpmethod"></a>
+## class HttpMethod  <a id="softchef-cdk-restapi-httpmethod"></a>
 
 
 
@@ -41,18 +41,18 @@ new HttpMethod(method: string)
 Name | Type | Description 
 -----|------|-------------
 **method** | <code>string</code> | HTTP Method.
-*static* **DELETE** | <code>[HttpMethod](#sccdk-restapi-httpmethod)</code> | HTTP DELETE Method.
-*static* **GET** | <code>[HttpMethod](#sccdk-restapi-httpmethod)</code> | HTTP GET Method.
-*static* **HEAD** | <code>[HttpMethod](#sccdk-restapi-httpmethod)</code> | HTTP HEAD Method.
-*static* **OPTIONS** | <code>[HttpMethod](#sccdk-restapi-httpmethod)</code> | HTTP OPTIONS Method.
-*static* **PATCH** | <code>[HttpMethod](#sccdk-restapi-httpmethod)</code> | HTTP PATH Method.
-*static* **POST** | <code>[HttpMethod](#sccdk-restapi-httpmethod)</code> | HTTP POST Method.
-*static* **PUT** | <code>[HttpMethod](#sccdk-restapi-httpmethod)</code> | HTTP PUT Method.
+*static* **DELETE** | <code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code> | HTTP DELETE Method.
+*static* **GET** | <code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code> | HTTP GET Method.
+*static* **HEAD** | <code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code> | HTTP HEAD Method.
+*static* **OPTIONS** | <code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code> | HTTP OPTIONS Method.
+*static* **PATCH** | <code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code> | HTTP PATH Method.
+*static* **POST** | <code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code> | HTTP POST Method.
+*static* **PUT** | <code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code> | HTTP PUT Method.
 
 ### Methods
 
 
-#### toString() <a id="sccdk-restapi-httpmethod-tostring"></a>
+#### toString() <a id="softchef-cdk-restapi-httpmethod-tostring"></a>
 
 
 
@@ -66,7 +66,7 @@ __Returns__:
 
 
 
-## class RestApi  <a id="sccdk-restapi-restapi"></a>
+## class RestApi  <a id="softchef-cdk-restapi-restapi"></a>
 
 
 
@@ -84,8 +84,8 @@ new RestApi(scope: Construct, id: string, props: RestApiProps)
 
 * **scope** (<code>[Construct](#aws-cdk-core-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
-* **props** (<code>[RestApiProps](#sccdk-restapi-restapiprops)</code>)  *No description*
-  * **resources** (<code>Array<[RestApiResourceProps](#sccdk-restapi-restapiresourceprops)></code>)  Define Rest API resources. 
+* **props** (<code>[RestApiProps](#softchef-cdk-restapi-restapiprops)</code>)  *No description*
+  * **resources** (<code>Array<[RestApiResourceProps](#softchef-cdk-restapi-restapiresourceprops)></code>)  Define Rest API resources. 
   * **enableCors** (<code>boolean</code>)  Enable cors, default is true. __*Optional*__
   * **restApi** (<code>[RestApi](#aws-cdk-aws-apigateway-restapi)</code>)  Custom RestApi. __*Optional*__
 
@@ -102,7 +102,7 @@ Name | Type | Description
 
 
 
-## struct RestApiProps  <a id="sccdk-restapi-restapiprops"></a>
+## struct RestApiProps  <a id="softchef-cdk-restapi-restapiprops"></a>
 
 
 
@@ -111,13 +111,13 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**resources** | <code>Array<[RestApiResourceProps](#sccdk-restapi-restapiresourceprops)></code> | Define Rest API resources.
+**resources** | <code>Array<[RestApiResourceProps](#softchef-cdk-restapi-restapiresourceprops)></code> | Define Rest API resources.
 **enableCors**? | <code>boolean</code> | Enable cors, default is true.<br/>__*Optional*__
 **restApi**? | <code>[RestApi](#aws-cdk-aws-apigateway-restapi)</code> | Custom RestApi.<br/>__*Optional*__
 
 
 
-## struct RestApiResourceProps  <a id="sccdk-restapi-restapiresourceprops"></a>
+## struct RestApiResourceProps  <a id="softchef-cdk-restapi-restapiresourceprops"></a>
 
 
 
@@ -126,7 +126,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**httpMethod** | <code>[HttpMethod](#sccdk-restapi-httpmethod)</code> | Specify HTTP Method.
+**httpMethod** | <code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code> | Specify HTTP Method.
 **lambdaFunction** | <code>[Function](#aws-cdk-aws-lambda-function)</code> | Specify Lambda function.
 **path** | <code>string</code> | Define Resource path.
 **authorizationType**? | <code>[AuthorizationType](#aws-cdk-aws-apigateway-authorizationtype)</code> | Specify AuthorizationType by aws-apigateway.AuthorizationType, default is NONE.<br/>__*Optional*__

@@ -1,13 +1,18 @@
-const { AwsCdkConstructLibrary } = require('projen');
+const { AwsCdkConstructLibrary, NpmAccess } = require('projen');
 
 const project = new AwsCdkConstructLibrary({
-  author: 'MinCheTsai',
-  authorAddress: 'minche@softchef.com',
+  author: 'softchef-iot-lab',
+  authorEmail: 'poke@softchef.com',
+  npmAccess: NpmAccess.PUBLIC,
   cdkVersion: '1.106.1',
+  projenVersion: '0.20.11',
+  initialVersion: '1.0.0',
+  releaseBranches: ['main'],
   defaultReleaseBranch: 'main',
+  dependabot: false,
   jsiiFqn: 'projen.AwsCdkConstructLibrary',
-  name: 'sccdk-restapi',
-  repositoryUrl: 'https://github.com/softchef/sccdk-restapi.git',
+  name: '@softchef/cdk-restapi',
+  repositoryUrl: 'https://github.com/softchef/cdk-restapi.git',
   cdkDependencies: [
     '@aws-cdk/core',
     '@aws-cdk/aws-apigateway',
@@ -17,7 +22,10 @@ const project = new AwsCdkConstructLibrary({
   devDeps: [
     '@aws-cdk/assert',
   ],
-  dependabot: false,
+  keywords: [
+    'cdk',
+    'restapi',
+  ],
   testdir: 'src/__tests__',
   mergify: false,
 });
