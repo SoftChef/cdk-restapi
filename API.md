@@ -96,7 +96,6 @@ new RestApi(scope: Construct, id: string, props: RestApiProps)
 
 Name | Type | Description 
 -----|------|-------------
-**origin** | <code>[RestApi](#aws-cdk-aws-apigateway-restapi)</code> | <span></span>
 **restApiId** | <code>string</code> | <span></span>
 **url** | <code>string</code> | <span></span>
 
