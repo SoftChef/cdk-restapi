@@ -4,7 +4,7 @@ import * as cdk from '@aws-cdk/core';
 import { RestApi, HttpMethod } from '../index';
 
 const app = new cdk.App();
-const stack = new cdk.Stack(app, 'sccdk-rest-api-demo');
+const stack = new cdk.Stack(app, 'cdk-restapi-demo');
 
 const LAMBDA_ASSETS_PATH = path.join(__dirname, '../../src/lambda-assets');
 

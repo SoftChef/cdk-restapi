@@ -19,15 +19,18 @@ export interface RestApiProps {
 }
 
 export class RestApi extends cdk.Construct {
-  private readonly _restApi: apigateway.RestApi;
-  public readonly origin: apigateway.RestApi;
+
   public readonly restApiId: string;
+
   public readonly url: string;
+
   constructor(scope: cdk.Construct, id: string, props: RestApiProps) {
     super(scope, id);
-    const _restApiProps: { [key: string]: any } = {};
+    let restApiProps: {
+      [key: string]: any;
+    } = {};
     if (props.enableCors) {
-      _restApiProps.defaultCorsPreflightOptions = {
+      restApiProps.defaultCorsPreflightOptions = {
         allowMethods: apigateway.Cors.ALL_METHODS,
         allowOrigins: apigateway.Cors.ALL_ORIGINS,
         allowHeaders: [
@@ -45,31 +48,57 @@ export class RestApi extends cdk.Construct {
         ],
       };
     }
-    this._restApi = this.origin = props.restApi ?? new apigateway.RestApi(this, this.node.id, _restApiProps);
-    this.restApiId = this._restApi.restApiId;
-    this.url = this._restApi.url;
-    const _resources: { [key: string]: apigateway.Resource } = {};
+    // Use custom or create new
+    const restApi = props.restApi ?? new apigateway.RestApi(this, this.node.id, restApiProps);
+    // Pass restApi properties by self
+    this.restApiId = restApi.restApiId;
+    this.url = restApi.url;
+    // Define resources
+    const resources: { [key: string]: apigateway.Resource } = {};
     for (const resource of props.resources) {
       const path: string[] = `/${resource.path.replace(/^\/{1}/, '')}`.split('/');
       const lastPath = path.reduce((previous, current, index) => {
         const part = `${previous}/${current}`;
-        if (!_resources[part]) {
+        if (!resources[part]) {
           if (index === 1) {
-            _resources[part] = this._restApi.root.addResource(current);
+            resources[part] = restApi.root.addResource(current);
           } else {
-            _resources[part] = _resources[previous].addResource(current);
+            resources[part] = resources[previous].addResource(current);
           }
         }
         return part;
       });
-      _resources[lastPath].addMethod(
-        resource.httpMethod.toString(),
-        new apigateway.LambdaIntegration(resource.lambdaFunction),
-        {
-          authorizationType: resource.authorizationType ?? apigateway.AuthorizationType.NONE,
-          authorizer: resource.authorizer ?? undefined,
-        },
-      );
+      switch (resource.authorizationType) {
+        case apigateway.AuthorizationType.COGNITO:
+        case apigateway.AuthorizationType.CUSTOM:
+          if (resource.authorizer) {
+            resources[lastPath].addMethod(
+              resource.httpMethod.toString(),
+              new apigateway.LambdaIntegration(resource.lambdaFunction),
+              {
+                authorizationType: apigateway.AuthorizationType.COGNITO,
+                authorizer: resource.authorizer,
+              },
+            );
+          } else {
+            throw new Error('You specify authorization type is COGNITO, but not specify authorizer.');
+          }
+          break;
+        case apigateway.AuthorizationType.IAM:
+          resources[lastPath].addMethod(
+            resource.httpMethod.toString(),
+            new apigateway.LambdaIntegration(resource.lambdaFunction),
+            {
+              authorizationType: apigateway.AuthorizationType.IAM,
+            },
+          );
+          break;
+        default:
+          resources[lastPath].addMethod(
+            resource.httpMethod.toString(),
+            new apigateway.LambdaIntegration(resource.lambdaFunction),
+          );
+      }
     }
   }
 }
