@@ -31,7 +31,7 @@
     "organization": false
   },
   "devDependencies": {
-    "@aws-cdk/assert": "^1.107.0",
+    "@aws-cdk/assert": "^1.108.0",
     "@types/jest": "^26.0.23",
     "@types/node": "^10.17.0",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
@@ -53,17 +53,17 @@
     "typescript": "^4.3.2"
   },
   "peerDependencies": {
-    "@aws-cdk/aws-apigateway": "^1.107.0",
-    "@aws-cdk/aws-lambda": "^1.107.0",
-    "@aws-cdk/aws-lambda-nodejs": "^1.107.0",
-    "@aws-cdk/core": "^1.107.0",
+    "@aws-cdk/aws-apigateway": "^1.108.0",
+    "@aws-cdk/aws-lambda": "^1.108.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.108.0",
+    "@aws-cdk/core": "^1.108.0",
     "constructs": "^3.2.27"
   },
   "dependencies": {
-    "@aws-cdk/aws-apigateway": "^1.107.0",
-    "@aws-cdk/aws-lambda": "^1.107.0",
-    "@aws-cdk/aws-lambda-nodejs": "^1.107.0",
-    "@aws-cdk/core": "^1.107.0"
+    "@aws-cdk/aws-apigateway": "^1.108.0",
+    "@aws-cdk/aws-lambda": "^1.108.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.108.0",
+    "@aws-cdk/core": "^1.108.0"
   },
   "bundledDependencies": [],
   "keywords": [
