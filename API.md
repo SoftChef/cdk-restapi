@@ -86,6 +86,8 @@ new RestApi(scope: Construct, id: string, props: RestApiProps)
 * **id** (<code>string</code>)  *No description*
 * **props** (<code>[RestApiProps](#softchef-cdk-restapi-restapiprops)</code>)  *No description*
   * **resources** (<code>Array<[RestApiResourceProps](#softchef-cdk-restapi-restapiresourceprops)></code>)  Define Rest API resources. 
+  * **authorizationType** (<code>[AuthorizationType](#aws-cdk-aws-apigateway-authorizationtype)</code>)  Specify globally AuthorizationType by aws-apigateway.AuthorizationType, default is NONE. __*Optional*__
+  * **authorizer** (<code>[IAuthorizer](#aws-cdk-aws-apigateway-iauthorizer)</code>)  Specify globally Authorizer by aws-apigateway.Authorizer, default is null. __*Optional*__
   * **enableCors** (<code>boolean</code>)  Enable cors, default is true. __*Optional*__
   * **restApi** (<code>[RestApi](#aws-cdk-aws-apigateway-restapi)</code>)  Custom RestApi. __*Optional*__
 
@@ -111,6 +113,8 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **resources** | <code>Array<[RestApiResourceProps](#softchef-cdk-restapi-restapiresourceprops)></code> | Define Rest API resources.
+**authorizationType**? | <code>[AuthorizationType](#aws-cdk-aws-apigateway-authorizationtype)</code> | Specify globally AuthorizationType by aws-apigateway.AuthorizationType, default is NONE.<br/>__*Optional*__
+**authorizer**? | <code>[IAuthorizer](#aws-cdk-aws-apigateway-iauthorizer)</code> | Specify globally Authorizer by aws-apigateway.Authorizer, default is null.<br/>__*Optional*__
 **enableCors**? | <code>boolean</code> | Enable cors, default is true.<br/>__*Optional*__
 **restApi**? | <code>[RestApi](#aws-cdk-aws-apigateway-restapi)</code> | Custom RestApi.<br/>__*Optional*__
 

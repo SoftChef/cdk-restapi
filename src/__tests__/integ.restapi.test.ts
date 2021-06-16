@@ -1,6 +1,7 @@
 import { SynthUtils } from '@aws-cdk/assert';
 import '@aws-cdk/assert/jest';
 import * as apigateway from '@aws-cdk/aws-apigateway';
+import * as cognito from '@aws-cdk/aws-cognito';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as cdk from '@aws-cdk/core';
 import { RestApi, HttpMethod } from '../index';
@@ -9,11 +10,18 @@ test('minimal usage', () => {
   // GIVEN
   const app = new cdk.App();
   const stack = new cdk.Stack(app, 'demo-stack');
+  const cognitoAuthorizer = new apigateway.CognitoUserPoolsAuthorizer(stack, 'Authorizer', {
+    cognitoUserPools: [
+      new cognito.UserPool(stack, 'UserPool'),
+    ],
+  });
   new RestApi(stack, 'test-api', {
+    authorizationType: apigateway.AuthorizationType.IAM,
     resources: [
       {
         path: '/articles',
         httpMethod: HttpMethod.GET,
+        authorizationType: apigateway.AuthorizationType.NONE,
         lambdaFunction: new lambda.Function(stack, 'GetArticles', {
           runtime: lambda.Runtime.NODEJS_12_X,
           handler: 'index.handler',
@@ -32,7 +40,6 @@ test('minimal usage', () => {
       {
         path: '/articles',
         httpMethod: HttpMethod.POST,
-        authorizationType: apigateway.AuthorizationType.IAM,
         lambdaFunction: new lambda.Function(stack, 'CreateArticle', {
           runtime: lambda.Runtime.NODEJS_12_X,
           handler: 'index.handler',
@@ -51,6 +58,7 @@ test('minimal usage', () => {
       {
         path: '/articles/{articleId}',
         httpMethod: HttpMethod.GET,
+        authorizationType: apigateway.AuthorizationType.NONE,
         lambdaFunction: new lambda.Function(stack, 'GetArticle', {
           runtime: lambda.Runtime.NODEJS_12_X,
           handler: 'index.handler',
@@ -69,6 +77,8 @@ test('minimal usage', () => {
       {
         path: '/authors',
         httpMethod: HttpMethod.GET,
+        authorizationType: apigateway.AuthorizationType.COGNITO,
+        authorizer: cognitoAuthorizer,
         lambdaFunction: new lambda.Function(stack, 'GetAuthors', {
           runtime: lambda.Runtime.NODEJS_12_X,
           handler: 'index.handler',
@@ -99,6 +109,9 @@ test('minimal usage', () => {
   const expectAuthorsResourceId = {
     Ref: 'testapiauthors6FAC66C5',
   };
+  const expectCognitoAuthorizer = {
+    Ref: 'AuthorizerBD825682',
+  };
   expect(SynthUtils.synthesize(stack).template).toMatchSnapshot();
   expect(stack).toHaveResourceLike('AWS::ApiGateway::RestApi', {
     Name: 'test-api',
@@ -120,13 +133,14 @@ test('minimal usage', () => {
     HttpMethod: 'GET',
     RestApiId: expectRestApiId,
     ResourceId: expectArticlesResourceId,
+    AuthorizationType: apigateway.AuthorizationType.NONE,
   });
   // POST:/articles
   expect(stack).toHaveResourceLike('AWS::ApiGateway::Method', {
     HttpMethod: 'POST',
     RestApiId: expectRestApiId,
     ResourceId: expectArticlesResourceId,
-    AuthorizationType: 'AWS_IAM',
+    AuthorizationType: apigateway.AuthorizationType.IAM,
   });
   // OPTIONS:/articles
   expect(stack).toHaveResourceLike('AWS::ApiGateway::Method', {
@@ -139,6 +153,7 @@ test('minimal usage', () => {
     HttpMethod: 'GET',
     RestApiId: expectRestApiId,
     ResourceId: expectArticleIdResourceId,
+    AuthorizationType: apigateway.AuthorizationType.NONE,
   });
   // OPTIONS:/articles/{articleId}
   expect(stack).toHaveResourceLike('AWS::ApiGateway::Method', {
@@ -151,6 +166,8 @@ test('minimal usage', () => {
     HttpMethod: 'GET',
     RestApiId: expectRestApiId,
     ResourceId: expectAuthorsResourceId,
+    AuthorizationType: apigateway.AuthorizationType.COGNITO,
+    AuthorizerId: expectCognitoAuthorizer,
   });
   // OPTIONS:/authors
   expect(stack).toHaveResourceLike('AWS::ApiGateway::Method', {

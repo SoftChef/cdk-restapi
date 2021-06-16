@@ -74,7 +74,7 @@
     },
     {
       "name": "projen",
-      "version": "0.24.0",
+      "version": "0.24.8",
       "type": "build"
     },
     {
@@ -88,6 +88,11 @@
     },
     {
       "name": "@aws-cdk/aws-apigateway",
+      "version": "^1.108.1",
+      "type": "peer"
+    },
+    {
+      "name": "@aws-cdk/aws-cognito",
       "version": "^1.108.1",
       "type": "peer"
     },
@@ -113,6 +118,11 @@
     },
     {
       "name": "@aws-cdk/aws-apigateway",
+      "version": "^1.108.1",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/aws-cognito",
       "version": "^1.108.1",
       "type": "runtime"
     },
