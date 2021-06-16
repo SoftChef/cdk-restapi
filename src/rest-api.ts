@@ -23,7 +23,7 @@ export interface RestApiProps {
   /**
    * Specify globally Authorizer by aws-apigateway.Authorizer, default is null
    */
-  readonly authorizer?: apigateway.IAuthorizer;
+  readonly authorizer?: apigateway.IAuthorizer | undefined;
 }
 
 export class RestApi extends cdk.Construct {

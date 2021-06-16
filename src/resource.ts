@@ -18,7 +18,7 @@ export interface RestApiResourceProps {
   /**
    * Specify Authorizer by aws-apigateway.Authorizer, default is null
    */
-  readonly authorizer?: apigateway.IAuthorizer;
+  readonly authorizer?: apigateway.IAuthorizer | undefined;
   /**
    * Specify Lambda function
    */
