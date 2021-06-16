@@ -31,6 +31,25 @@ Object {
     },
   },
   "Resources": Object {
+    "AuthorizerBD825682": Object {
+      "Properties": Object {
+        "IdentitySource": "method.request.header.Authorization",
+        "Name": "demostackAuthorizer75E3A6D9",
+        "ProviderARNs": Array [
+          Object {
+            "Fn::GetAtt": Array [
+              "UserPool6BA7E5F2",
+              "Arn",
+            ],
+          },
+        ],
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+        "Type": "COGNITO_USER_POOLS",
+      },
+      "Type": "AWS::ApiGateway::Authorizer",
+    },
     "CreateArticle624F3F33": Object {
       "DependsOn": Array [
         "CreateArticleServiceRole383E2C89",
@@ -267,6 +286,37 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
+    "UserPool6BA7E5F2": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "AccountRecoverySetting": Object {
+          "RecoveryMechanisms": Array [
+            Object {
+              "Name": "verified_phone_number",
+              "Priority": 1,
+            },
+            Object {
+              "Name": "verified_email",
+              "Priority": 2,
+            },
+          ],
+        },
+        "AdminCreateUserConfig": Object {
+          "AllowAdminCreateUserOnly": true,
+        },
+        "EmailVerificationMessage": "The verification code to your new account is {####}",
+        "EmailVerificationSubject": "Verify your new account",
+        "SmsVerificationMessage": "The verification code to your new account is {####}",
+        "VerificationMessageTemplate": Object {
+          "DefaultEmailOption": "CONFIRM_WITH_CODE",
+          "EmailMessage": "The verification code to your new account is {####}",
+          "EmailSubject": "Verify your new account",
+          "SmsMessage": "The verification code to your new account is {####}",
+        },
+      },
+      "Type": "AWS::Cognito::UserPool",
+      "UpdateReplacePolicy": "Retain",
+    },
     "testapi85A023B7": Object {
       "Properties": Object {
         "Name": "test-api",
@@ -318,7 +368,7 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "testapiDeployment914C6494e3c218f55de21e5b77c450694f544c56": Object {
+    "testapiDeployment914C6494a99ec420e7802d864ba3328708eaceb1": Object {
       "DependsOn": Array [
         "testapiarticlesarticleIdGET5646FA55",
         "testapiarticlesarticleIdOPTIONS3BC3B55F",
@@ -343,7 +393,7 @@ Object {
     "testapiDeploymentStageprodFCB742EA": Object {
       "Properties": Object {
         "DeploymentId": Object {
-          "Ref": "testapiDeployment914C6494e3c218f55de21e5b77c450694f544c56",
+          "Ref": "testapiDeployment914C6494a99ec420e7802d864ba3328708eaceb1",
         },
         "RestApiId": Object {
           "Ref": "testapi85A023B7",
@@ -870,7 +920,10 @@ Object {
     },
     "testapiauthorsGET5E9C2DD4": Object {
       "Properties": Object {
-        "AuthorizationType": "NONE",
+        "AuthorizationType": "COGNITO_USER_POOLS",
+        "AuthorizerId": Object {
+          "Ref": "AuthorizerBD825682",
+        },
         "HttpMethod": "GET",
         "Integration": Object {
           "IntegrationHttpMethod": "POST",

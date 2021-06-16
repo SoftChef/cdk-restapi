@@ -5,7 +5,7 @@ const project = new AwsCdkConstructLibrary({
   authorEmail: 'poke@softchef.com',
   npmAccess: NpmAccess.PUBLIC,
   cdkVersion: '1.108.1',
-  projenVersion: '0.24.0',
+  projenVersion: '0.24.8',
   initialVersion: '1.0.0',
   defaultReleaseBranch: 'main',
   dependabot: true,
@@ -17,15 +17,16 @@ const project = new AwsCdkConstructLibrary({
     '@aws-cdk/aws-apigateway',
     '@aws-cdk/aws-lambda',
     '@aws-cdk/aws-lambda-nodejs',
-  ],
-  devDeps: [
-    '@aws-cdk/assert',
+    '@aws-cdk/aws-cognito',
   ],
   keywords: [
     'cdk',
     'restapi',
   ],
   testdir: 'src/__tests__',
+  gitignore: [
+    'src/**/dist',
+  ],
   mergify: false,
 });
 
