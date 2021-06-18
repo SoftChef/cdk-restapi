@@ -130,7 +130,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **httpMethod** | <code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code> | Specify HTTP Method.
-**lambdaFunction** | <code>[Function](#aws-cdk-aws-lambda-function)</code> | Specify Lambda function.
+**lambdaFunction** | <code>[IFunction](#aws-cdk-aws-lambda-ifunction)</code> | Specify Lambda function.
 **path** | <code>string</code> | Define Resource path.
 **authorizationType**? | <code>[AuthorizationType](#aws-cdk-aws-apigateway-authorizationtype)</code> | Specify AuthorizationType by aws-apigateway.AuthorizationType, default is NONE.<br/>__*Optional*__
 **authorizer**? | <code>[IAuthorizer](#aws-cdk-aws-apigateway-iauthorizer)</code> | Specify Authorizer by aws-apigateway.Authorizer, default is null.<br/>__*Optional*__
