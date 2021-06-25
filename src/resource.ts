@@ -22,5 +22,5 @@ export interface RestApiResourceProps {
   /**
    * Specify Lambda function
    */
-  readonly lambdaFunction: lambda.Function;
+  readonly lambdaFunction: lambda.IFunction;
 }

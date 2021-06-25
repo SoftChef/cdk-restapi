@@ -2,7 +2,7 @@
   "dependencies": [
     {
       "name": "@aws-cdk/assert",
-      "version": "^1.108.1",
+      "version": "^1.110.0",
       "type": "build"
     },
     {
@@ -74,7 +74,7 @@
     },
     {
       "name": "projen",
-      "version": "0.24.8",
+      "version": "0.24.12",
       "type": "build"
     },
     {
@@ -88,27 +88,27 @@
     },
     {
       "name": "@aws-cdk/aws-apigateway",
-      "version": "^1.108.1",
+      "version": "^1.110.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-cognito",
-      "version": "^1.108.1",
+      "version": "^1.110.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-lambda-nodejs",
-      "version": "^1.108.1",
+      "version": "^1.110.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/aws-lambda",
-      "version": "^1.108.1",
+      "version": "^1.110.0",
       "type": "peer"
     },
     {
       "name": "@aws-cdk/core",
-      "version": "^1.108.1",
+      "version": "^1.110.0",
       "type": "peer"
     },
     {
@@ -118,27 +118,27 @@
     },
     {
       "name": "@aws-cdk/aws-apigateway",
-      "version": "^1.108.1",
+      "version": "^1.110.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-cognito",
-      "version": "^1.108.1",
+      "version": "^1.110.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-lambda-nodejs",
-      "version": "^1.108.1",
+      "version": "^1.110.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-lambda",
-      "version": "^1.108.1",
+      "version": "^1.110.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/core",
-      "version": "^1.108.1",
+      "version": "^1.110.0",
       "type": "runtime"
     }
   ],
