@@ -122,6 +122,19 @@ addResource(resource: RestApiResourceProps): RestApi
 __Returns__:
 * <code>[RestApi](#softchef-cdk-restapi-restapi)</code>
 
+#### addResources(resources) <a id="softchef-cdk-restapi-restapi-addresources"></a>
+
+
+
+```ts
+addResources(resources: Array<RestApiResourceProps>): RestApi
+```
+
+* **resources** (<code>Array<[RestApiResourceProps](#softchef-cdk-restapi-restapiresourceprops)></code>)  *No description*
+
+__Returns__:
+* <code>[RestApi](#softchef-cdk-restapi-restapi)</code>
+
 
 
 ## struct RestApiProps  <a id="softchef-cdk-restapi-restapiprops"></a>

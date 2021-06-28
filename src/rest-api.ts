@@ -74,9 +74,7 @@ export class RestApi extends cdk.Construct {
     // Use custom or create new
     this._restApi = props.restApi ?? new apigateway.RestApi(this, this.node.id, restApiProps);
     // Define resources
-    for (const resource of props.resources) {
-      this.addResource(resource);
-    }
+    this.addResources(props.resources);
   }
 
   get restApiId(): string {
@@ -85,6 +83,13 @@ export class RestApi extends cdk.Construct {
 
   get url(): string {
     return this._restApi.url;
+  }
+
+  public addResources(resources: RestApiResourceProps[]): this {
+    for (const resource of resources) {
+      this.addResource(resource);
+    }
+    return this;
   }
 
   public addResource(resource: RestApiResourceProps): this {

@@ -20,62 +20,78 @@ const demoRestApi = new RestApi(stack, 'RestApiDemo', {
       path: '/articles',
       httpMethod: HttpMethod.GET,
       lambdaFunction: new lambda.NodejsFunction(stack, 'GetArticles', {
-        entry: `./src/lambda-assets/articles/get-articles/app.ts`,
+        entry: `./lambda-assets/articles/get-articles/app.ts`,
       }),
     },
     {
       path: '/articles',
       httpMethod: HttpMethod.POST,
       lambdaFunction: new lambda.NodejsFunction(stack, 'CreateArticle', {
-        entry: `./src/lambda-assets/articles/create-article/app.ts`,
+        entry: `./lambda-assets/articles/create-article/app.ts`,
       }),
     },
     {
       path: '/articles/{articleId}',
       httpMethod: HttpMethod.GET,
       lambdaFunction: new lambda.NodejsFunction(stack, 'GetArticle', {
-        entry: `./src/lambda-assets/articles/get-article/app.ts`,
+        entry: `./lambda-assets/articles/get-article/app.ts`,
       }),
     },
     {
       path: '/articles/{articleId}',
       httpMethod: HttpMethod.PUT,
       lambdaFunction: new lambda.NodejsFunction(stack, 'UpdateArticle', {
-        entry: `./src/lambda-assets/articles/update-article/app.ts`,
+        entry: `./lambda-assets/articles/update-article/app.ts`,
       }),
     },
     {
       path: '/articles/{articleId}/comments',
       httpMethod: HttpMethod.GET,
       lambdaFunction: new lambda.NodejsFunction(stack, 'GetComments', {
-        entry: `./src/lambda-assets/articles/get-comments/app.ts`,
+        entry: `./lambda-assets/articles/get-comments/app.ts`,
       }),
     },
     {
       path: '/articles/{articleId}/comments',
       httpMethod: HttpMethod.POST,
       lambdaFunction: new lambda.NodejsFunction(stack, 'CreateComment', {
-        entry: `./src/lambda-assets/articles/create-comment/app.ts`,
-      }),
-    },
-    {
-      path: '/authors',
-      httpMethod: HttpMethod.GET,
-      lambdaFunction: new lambda.NodejsFunction(stack, 'GetAuthors', {
-        entry: `./src/lambda-assets/authors/get-authors/app.ts`,
-      }),
-    },
-    {
-      path: '/authors/{authorId}',
-      httpMethod: HttpMethod.GET,
-      lambdaFunction: new lambda.NodejsFunction(stack, 'GetAuthor', {
-        entry: `./src/lambda-assets/authors/get-author/app.ts`,
+        entry: `./lambda-assets/articles/create-comment/app.ts`,
       }),
     },
   ],
   enableCors: true,
 });
+
+// Add multi-resources
+demoRestApi.addResources([
+  {
+    path: '/authors',
+    httpMethod: HttpMethod.GET,
+    lambdaFunction: new lambda.NodejsFunction(stack, 'GetAuthors', {
+      entry: `./lambda-assets/authors/get-authors/app.ts`,
+    }),
+  },
+  {
+    path: '/authors/{authorId}',
+    httpMethod: HttpMethod.GET,
+    lambdaFunction: new lambda.NodejsFunction(stack, 'GetAuthor', {
+      entry: `./lambda-assets/authors/get-author/app.ts`,
+    }),
+  }
+]);
+
+// Add single resource
+demoRestApi.addResource({
+  path: '/authors',
+  httpMethod: HttpMethod.POST,
+  lambdaFunction: new lambda.NodejsFunction(stack, 'CreateAuthors', {
+    entry: `./lambda-assets/authors/create-authors/app.ts`,
+  }),
+})
+
 ```
+
+
 
 ### Demo
 
