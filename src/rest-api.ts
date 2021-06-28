@@ -1,6 +1,5 @@
 import * as apigateway from '@aws-cdk/aws-apigateway';
 import * as cdk from '@aws-cdk/core';
-
 import { RestApiResourceProps } from './resource';
 
 export interface RestApiProps {
@@ -28,15 +27,23 @@ export interface RestApiProps {
 
 export class RestApi extends cdk.Construct {
 
-  public readonly restApiId: string;
+  private _globalAuthorizationType?: apigateway.AuthorizationType | undefined;
 
-  public readonly url: string;
+  private _globalAuthorizer?: apigateway.IAuthorizer | undefined;
+
+  private _restApi: apigateway.RestApi;
+
+  private _resources: {
+    [key: string]: apigateway.Resource;
+  } = {}
 
   constructor(scope: cdk.Construct, id: string, props: RestApiProps) {
     super(scope, id);
+
     let restApiProps: {
       [key: string]: any;
     } = {};
+
     if (props.enableCors) {
       restApiProps.defaultCorsPreflightOptions = {
         allowMethods: apigateway.Cors.ALL_METHODS,
@@ -56,70 +63,82 @@ export class RestApi extends cdk.Construct {
         ],
       };
     }
-    // Use custom or create new
-    const restApi = props.restApi ?? new apigateway.RestApi(this, this.node.id, restApiProps);
-    // Pass restApi properties by self
-    this.restApiId = restApi.restApiId;
-    this.url = restApi.url;
-    // Define resources
-    const resources: { [key: string]: apigateway.Resource } = {};
-    for (const resource of props.resources) {
-      const path: string[] = `/${resource.path.replace(/^\/{1}/, '')}`.split('/');
-      const lastPath = path.reduce((previous, current, index) => {
-        const part = `${previous}/${current}`;
-        if (!resources[part]) {
-          if (index === 1) {
-            resources[part] = restApi.root.addResource(current);
-          } else {
-            resources[part] = resources[previous].addResource(current);
-          }
-        }
-        return part;
-      });
-      let authorizationType: apigateway.AuthorizationType;
-      if (resource.authorizationType) {
-        authorizationType = resource.authorizationType;
-      } else if (props.authorizationType) {
-        authorizationType = props.authorizationType;
-      } else {
-        authorizationType = apigateway.AuthorizationType.NONE;
-      }
-      switch (authorizationType) {
-        case apigateway.AuthorizationType.COGNITO:
-        case apigateway.AuthorizationType.CUSTOM:
-          let authorizer: apigateway.IAuthorizer;
-          if (resource.authorizer) {
-            authorizer = resource.authorizer;
-          } else if (props.authorizer) {
-            authorizer = props.authorizer;
-          } else {
-            throw new Error('You specify authorization type is COGNITO, but not specify authorizer.');
-          }
-          resources[lastPath].addMethod(
-            resource.httpMethod.toString(),
-            new apigateway.LambdaIntegration(resource.lambdaFunction),
-            {
-              authorizationType: apigateway.AuthorizationType.COGNITO,
-              authorizer: authorizer,
-            },
-          );
-          break;
-        case apigateway.AuthorizationType.IAM:
-          resources[lastPath].addMethod(
-            resource.httpMethod.toString(),
-            new apigateway.LambdaIntegration(resource.lambdaFunction),
-            {
-              authorizationType: apigateway.AuthorizationType.IAM,
-            },
-          );
-          break;
-        case apigateway.AuthorizationType.NONE:
-        default:
-          resources[lastPath].addMethod(
-            resource.httpMethod.toString(),
-            new apigateway.LambdaIntegration(resource.lambdaFunction),
-          );
-      }
+
+    if (props.authorizationType) {
+      this._globalAuthorizationType = props.authorizationType;
     }
+
+    if (props.authorizer) {
+      this._globalAuthorizer = props.authorizer;
+    }
+    // Use custom or create new
+    this._restApi = props.restApi ?? new apigateway.RestApi(this, this.node.id, restApiProps);
+    // Define resources
+    for (const resource of props.resources) {
+      this.addResource(resource);
+    }
+  }
+
+  get restApiId(): string {
+    return this._restApi.restApiId;
+  }
+
+  get url(): string {
+    return this._restApi.url;
+  }
+
+  public addResource(resource: RestApiResourceProps): this {
+    const path: string[] = `/${resource.path.replace(/^\/{1}/, '')}`.split('/');
+    const lastPath = path.reduce((previous, current, index) => {
+      const part = `${previous}/${current}`;
+      if (!this._resources[part]) {
+        if (index === 1) {
+          this._resources[part] = this._restApi.root.addResource(current);
+        } else {
+          this._resources[part] = this._resources[previous].addResource(current);
+        }
+      }
+      return part;
+    });
+    const authorizationType: apigateway.AuthorizationType = resource.authorizationType
+      ?? this._globalAuthorizationType
+      ?? apigateway.AuthorizationType.NONE;
+    switch (authorizationType) {
+      case apigateway.AuthorizationType.COGNITO:
+      case apigateway.AuthorizationType.CUSTOM:
+        let authorizer: apigateway.IAuthorizer;
+        if (resource.authorizer) {
+          authorizer = resource.authorizer;
+        } else if (this._globalAuthorizer) {
+          authorizer = this._globalAuthorizer;
+        } else {
+          throw new Error('You specify authorization type is COGNITO, but not specify authorizer.');
+        }
+        this._resources[lastPath].addMethod(
+          resource.httpMethod.toString(),
+          new apigateway.LambdaIntegration(resource.lambdaFunction),
+          {
+            authorizationType: apigateway.AuthorizationType.COGNITO,
+            authorizer: authorizer,
+          },
+        );
+        break;
+      case apigateway.AuthorizationType.IAM:
+        this._resources[lastPath].addMethod(
+          resource.httpMethod.toString(),
+          new apigateway.LambdaIntegration(resource.lambdaFunction),
+          {
+            authorizationType: apigateway.AuthorizationType.IAM,
+          },
+        );
+        break;
+      case apigateway.AuthorizationType.NONE:
+      default:
+        this._resources[lastPath].addMethod(
+          resource.httpMethod.toString(),
+          new apigateway.LambdaIntegration(resource.lambdaFunction),
+        );
+    }
+    return this;
   }
 }

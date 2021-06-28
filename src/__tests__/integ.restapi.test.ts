@@ -15,7 +15,7 @@ test('minimal usage', () => {
       new cognito.UserPool(stack, 'UserPool'),
     ],
   });
-  new RestApi(stack, 'test-api', {
+  const restApi = new RestApi(stack, 'test-api', {
     authorizationType: apigateway.AuthorizationType.IAM,
     resources: [
       {
@@ -97,6 +97,26 @@ test('minimal usage', () => {
     ],
     enableCors: true,
   });
+  restApi.addResource({
+    path: '/authors/{authorId}',
+    httpMethod: HttpMethod.POST,
+    authorizationType: apigateway.AuthorizationType.COGNITO,
+    authorizer: cognitoAuthorizer,
+    lambdaFunction: new lambda.Function(stack, 'CreateAuthor', {
+      runtime: lambda.Runtime.NODEJS_12_X,
+      handler: 'index.handler',
+      code: new lambda.InlineCode(`
+        export async function handler() {
+          return {
+            statusCode: 200,
+            body: JSON.stringify({
+              created: true,
+            }),
+          };
+        }
+      `),
+    }),
+  });
   const expectRestApiId = {
     Ref: 'testapi85A023B7',
   };
@@ -122,12 +142,12 @@ test('minimal usage', () => {
   expect(stack).toHaveResourceLike('AWS::ApiGateway::Resource', {
     PathPart: '{articleId}',
   });
-  expect(stack).toCountResources('AWS::ApiGateway::Resource', 3);
+  expect(stack).toCountResources('AWS::ApiGateway::Resource', 4);
   expect(stack).toHaveResourceLike('AWS::ApiGateway::Resource', {
     PathPart: 'articles',
     RestApiId: expectRestApiId,
   }); // testapiarticlesFD498DE1
-  expect(stack).toCountResources('AWS::ApiGateway::Method', 8);
+  expect(stack).toCountResources('AWS::ApiGateway::Method', 10);
   // GET:/articles
   expect(stack).toHaveResourceLike('AWS::ApiGateway::Method', {
     HttpMethod: 'GET',

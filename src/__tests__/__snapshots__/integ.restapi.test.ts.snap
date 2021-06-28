@@ -109,6 +109,65 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
+    "CreateAuthor58FF5A7D": Object {
+      "DependsOn": Array [
+        "CreateAuthorServiceRole8141A9C9",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "ZipFile": "
+        export async function handler() {
+          return {
+            statusCode: 200,
+            body: JSON.stringify({
+              created: true,
+            }),
+          };
+        }
+      ",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "CreateAuthorServiceRole8141A9C9",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "CreateAuthorServiceRole8141A9C9": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
     "GetArticle14A73EAB": Object {
       "DependsOn": Array [
         "GetArticleServiceRoleFC66BAFD",
@@ -368,7 +427,7 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "testapiDeployment914C6494a99ec420e7802d864ba3328708eaceb1": Object {
+    "testapiDeployment914C6494bfe8d91c361ca35c676e5812e8cc92e4": Object {
       "DependsOn": Array [
         "testapiarticlesarticleIdGET5646FA55",
         "testapiarticlesarticleIdOPTIONS3BC3B55F",
@@ -377,6 +436,9 @@ Object {
         "testapiarticlesOPTIONS238F105B",
         "testapiarticlesPOST70DB0F69",
         "testapiarticlesFD498DE1",
+        "testapiauthorsauthorIdOPTIONS7B0596BF",
+        "testapiauthorsauthorIdPOSTD522D0C7",
+        "testapiauthorsauthorId81C37CA6",
         "testapiauthorsGET5E9C2DD4",
         "testapiauthorsOPTIONSBB83FC68",
         "testapiauthors6FAC66C5",
@@ -393,7 +455,7 @@ Object {
     "testapiDeploymentStageprodFCB742EA": Object {
       "Properties": Object {
         "DeploymentId": Object {
-          "Ref": "testapiDeployment914C6494a99ec420e7802d864ba3328708eaceb1",
+          "Ref": "testapiDeployment914C6494bfe8d91c361ca35c676e5812e8cc92e4",
         },
         "RestApiId": Object {
           "Ref": "testapi85A023B7",
@@ -1071,6 +1133,178 @@ Object {
         ],
         "ResourceId": Object {
           "Ref": "testapiauthors6FAC66C5",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiauthorsauthorId81C37CA6": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "testapiauthors6FAC66C5",
+        },
+        "PathPart": "{authorId}",
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "testapiauthorsauthorIdOPTIONS7B0596BF": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Origin,Content-Type,Fetch-Mode,Accept,X-Amz-Date,Accept-Encoding,Authorization,SyncCenter,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "testapiauthorsauthorId81C37CA6",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiauthorsauthorIdPOSTApiPermissionTestdemostacktestapi60E4E739POSTauthorsauthorId5844F731": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "CreateAuthor58FF5A7D",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testapi85A023B7",
+              },
+              "/test-invoke-stage/POST/authors/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testapiauthorsauthorIdPOSTApiPermissiondemostacktestapi60E4E739POSTauthorsauthorId17C1B331": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "CreateAuthor58FF5A7D",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "testapi85A023B7",
+              },
+              "/",
+              Object {
+                "Ref": "testapiDeploymentStageprodFCB742EA",
+              },
+              "/POST/authors/*",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "testapiauthorsauthorIdPOSTD522D0C7": Object {
+      "Properties": Object {
+        "AuthorizationType": "COGNITO_USER_POOLS",
+        "AuthorizerId": Object {
+          "Ref": "AuthorizerBD825682",
+        },
+        "HttpMethod": "POST",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "CreateAuthor58FF5A7D",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "testapiauthorsauthorId81C37CA6",
         },
         "RestApiId": Object {
           "Ref": "testapi85A023B7",

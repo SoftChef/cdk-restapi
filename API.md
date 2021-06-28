@@ -101,6 +101,27 @@ Name | Type | Description
 **restApiId** | <code>string</code> | <span></span>
 **url** | <code>string</code> | <span></span>
 
+### Methods
+
+
+#### addResource(resource) <a id="softchef-cdk-restapi-restapi-addresource"></a>
+
+
+
+```ts
+addResource(resource: RestApiResourceProps): RestApi
+```
+
+* **resource** (<code>[RestApiResourceProps](#softchef-cdk-restapi-restapiresourceprops)</code>)  *No description*
+  * **httpMethod** (<code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code>)  Specify HTTP Method. 
+  * **lambdaFunction** (<code>[IFunction](#aws-cdk-aws-lambda-ifunction)</code>)  Specify Lambda function. 
+  * **path** (<code>string</code>)  Define Resource path. 
+  * **authorizationType** (<code>[AuthorizationType](#aws-cdk-aws-apigateway-authorizationtype)</code>)  Specify AuthorizationType by aws-apigateway.AuthorizationType, default is NONE. __*Optional*__
+  * **authorizer** (<code>[IAuthorizer](#aws-cdk-aws-apigateway-iauthorizer)</code>)  Specify Authorizer by aws-apigateway.Authorizer, default is null. __*Optional*__
+
+__Returns__:
+* <code>[RestApi](#softchef-cdk-restapi-restapi)</code>
+
 
 
 ## struct RestApiProps  <a id="softchef-cdk-restapi-restapiprops"></a>
