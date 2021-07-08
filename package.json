@@ -20,9 +20,7 @@
     "package": "npx projen package",
     "eslint": "npx projen eslint",
     "compat": "npx projen compat",
-    "publish:npm": "npx projen publish:npm",
     "docgen": "npx projen docgen",
-    "release": "npx projen release",
     "projen": "npx projen",
     "start": "npx projen start"
   },
