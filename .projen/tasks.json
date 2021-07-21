@@ -128,6 +128,27 @@
         }
       ]
     },
+    "upgrade-dependencies": {
+      "name": "upgrade-dependencies",
+      "description": "upgrade dependencies",
+      "env": {
+        "CI": "0"
+      },
+      "steps": [
+        {
+          "exec": "npm-check-updates --upgrade --target=minor --reject='projen'"
+        },
+        {
+          "exec": "yarn install --check-files"
+        },
+        {
+          "exec": "yarn upgrade @aws-cdk/assert @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema npm-check-updates standard-version typescript @aws-cdk/aws-apigateway @aws-cdk/aws-cognito @aws-cdk/aws-lambda-nodejs @aws-cdk/aws-lambda @aws-cdk/core constructs @aws-cdk/aws-apigateway @aws-cdk/aws-cognito @aws-cdk/aws-lambda-nodejs @aws-cdk/aws-lambda @aws-cdk/core"
+        },
+        {
+          "exec": "npx projen"
+        }
+      ]
+    },
     "upgrade-projen": {
       "name": "upgrade-projen",
       "description": "upgrade projen",
