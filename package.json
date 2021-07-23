@@ -1,5 +1,6 @@
 {
   "name": "@softchef/cdk-restapi",
+  "description": "Easy to manage Rest-API",
   "repository": {
     "type": "git",
     "url": "https://github.com/softchef/cdk-restapi.git"
@@ -33,7 +34,7 @@
     "organization": false
   },
   "devDependencies": {
-    "@aws-cdk/assert": "^1.114.0",
+    "@aws-cdk/assert": "^1.95.2",
     "@types/jest": "^26.0.23",
     "@types/node": "^10.17.0",
     "@typescript-eslint/eslint-plugin": "^4.27.0",
@@ -55,19 +56,19 @@
     "typescript": "^4.3.2"
   },
   "peerDependencies": {
-    "@aws-cdk/aws-apigateway": "^1.114.0",
-    "@aws-cdk/aws-cognito": "^1.114.0",
-    "@aws-cdk/aws-lambda": "^1.114.0",
-    "@aws-cdk/aws-lambda-nodejs": "^1.114.0",
-    "@aws-cdk/core": "^1.114.0",
+    "@aws-cdk/aws-apigateway": "^1.95.2",
+    "@aws-cdk/aws-cognito": "^1.95.2",
+    "@aws-cdk/aws-lambda": "^1.95.2",
+    "@aws-cdk/aws-lambda-nodejs": "^1.95.2",
+    "@aws-cdk/core": "^1.95.2",
     "constructs": "^3.2.27"
   },
   "dependencies": {
-    "@aws-cdk/aws-apigateway": "^1.114.0",
-    "@aws-cdk/aws-cognito": "^1.114.0",
-    "@aws-cdk/aws-lambda": "^1.114.0",
-    "@aws-cdk/aws-lambda-nodejs": "^1.114.0",
-    "@aws-cdk/core": "^1.114.0"
+    "@aws-cdk/aws-apigateway": "^1.95.2",
+    "@aws-cdk/aws-cognito": "^1.95.2",
+    "@aws-cdk/aws-lambda": "^1.95.2",
+    "@aws-cdk/aws-lambda-nodejs": "^1.95.2",
+    "@aws-cdk/core": "^1.95.2"
   },
   "bundledDependencies": [],
   "keywords": [
