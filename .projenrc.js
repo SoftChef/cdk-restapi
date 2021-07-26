@@ -1,4 +1,6 @@
-const { AwsCdkConstructLibrary, NpmAccess } = require('projen');
+const { AwsCdkConstructLibrary, DependenciesUpgradeMechanism, NpmAccess } = require('projen');
+
+const AUTOMATION_TOKEN = 'PROJEN_GITHUB_TOKEN';
 
 const project = new AwsCdkConstructLibrary({
   author: 'softchef-iot-lab',
@@ -18,6 +20,17 @@ const project = new AwsCdkConstructLibrary({
     '@aws-cdk/aws-lambda-nodejs',
     '@aws-cdk/aws-cognito',
   ],
+  depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow({
+    ignoreProjen: false,
+    workflowOptions: {
+      labels: ['auto-approve', 'auto-merge'],
+      secret: AUTOMATION_TOKEN,
+    },
+  }),
+  autoApproveOptions: {
+    secret: 'GITHUB_TOKEN',
+    allowedUsernames: ['MinCheTsai'],
+  },
   keywords: [
     'cdk',
     'restapi',
@@ -26,7 +39,6 @@ const project = new AwsCdkConstructLibrary({
   gitignore: [
     'src/**/dist',
   ],
-  mergify: false,
 });
 
 project.synth();
