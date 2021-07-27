@@ -5,11 +5,10 @@ const AUTOMATION_TOKEN = 'PROJEN_GITHUB_TOKEN';
 const project = new AwsCdkConstructLibrary({
   author: 'SoftChef',
   authorEmail: 'poke@softchef.com',
-  homepage: 'https://www.softchef.com',
+  authorUrl: 'https://www.softchef.com',
+  authorOrganization: true,
   npmAccess: NpmAccess.PUBLIC,
   cdkVersion: '1.95.2',
-  projenVersion: '0.27.6',
-  initialVersion: '1.0.0',
   defaultReleaseBranch: 'main',
   name: '@softchef/cdk-restapi',
   description: 'Easy to manage Rest-API',
