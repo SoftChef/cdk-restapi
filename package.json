@@ -28,7 +28,7 @@
     "start": "npx projen start"
   },
   "author": {
-    "name": "softchef-iot-lab",
+    "name": "SoftChef",
     "email": "poke@softchef.com",
     "organization": false
   },
