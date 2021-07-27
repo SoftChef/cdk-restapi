@@ -1,5 +1,9 @@
 # AWS CDK with RestApi
 
+[![npm version](https://badge.fury.io/js/%40softchef%2Fcdk-restapi.svg)](https://badge.fury.io/js/%40softchef%2Fcdk-restapi)
+![Release](https://github.com/SoftChef/cdk-restapi/workflows/Release/badge.svg)
+![npm](https://img.shields.io/npm/dt/@softchef/cdk-restapi?label=NPM%20Downloads&color=orange)
+
 This construct is base on @aws/aws-apigateway.RestApi.
 
 The RestApi has addResource & addMethod function to create REST API routes. But the source code are low readability about what kind of resources and method in the API. So this construct are redefine the resources to improve readability.
