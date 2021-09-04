@@ -20,6 +20,9 @@ const project = new AwsCdkConstructLibrary({
     '@aws-cdk/aws-lambda-nodejs',
     '@aws-cdk/aws-cognito',
   ],
+  bundledDeps: [
+    '@types/node@^12.12.6',
+  ],
   depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow({
     ignoreProjen: false,
     workflowOptions: {

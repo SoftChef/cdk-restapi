@@ -68,9 +68,12 @@
     "@aws-cdk/aws-cognito": "^1.95.2",
     "@aws-cdk/aws-lambda": "^1.95.2",
     "@aws-cdk/aws-lambda-nodejs": "^1.95.2",
-    "@aws-cdk/core": "^1.95.2"
+    "@aws-cdk/core": "^1.95.2",
+    "@types/node": "^12.12.6"
   },
-  "bundledDependencies": [],
+  "bundledDependencies": [
+    "@types/node"
+  ],
   "keywords": [
     "cdk",
     "restapi"
