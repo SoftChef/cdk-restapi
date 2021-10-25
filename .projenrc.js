@@ -13,7 +13,8 @@ const project = new AwsCdkConstructLibrary({
   name: '@softchef/cdk-restapi',
   description: 'Easy to manage Rest-API',
   repositoryUrl: 'https://github.com/softchef/cdk-restapi.git',
-  minNodeVersion: '14.17.0',
+  minNodeVersion: '12.7.0',
+  workflowNodeVersion: '12.13.0',
   cdkDependencies: [
     '@aws-cdk/core',
     '@aws-cdk/aws-apigateway',
