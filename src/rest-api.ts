@@ -44,7 +44,7 @@ export class RestApi extends cdk.Construct {
       [key: string]: any;
     } = {};
 
-    if (props.enableCors) {
+    if (props.enableCors !== false) {
       restApiProps.defaultCorsPreflightOptions = {
         allowMethods: apigateway.Cors.ALL_METHODS,
         allowOrigins: apigateway.Cors.ALL_ORIGINS,
