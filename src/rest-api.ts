@@ -56,6 +56,7 @@ export class RestApi extends cdk.Construct {
           'X-Amz-Date',
           'Accept-Encoding',
           'Authorization',
+          'cache-control',
           'SyncCenter',
           'X-Api-Key',
           'X-Amz-Security-Token',
