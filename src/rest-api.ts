@@ -35,7 +35,7 @@ export class RestApi extends cdk.Construct {
 
   private _resources: {
     [key: string]: apigateway.Resource;
-  } = {}
+  } = {};
 
   constructor(scope: cdk.Construct, id: string, props: RestApiProps) {
     super(scope, id);
