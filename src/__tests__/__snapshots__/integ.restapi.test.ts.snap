@@ -453,6 +453,9 @@ Object {
       "Type": "AWS::ApiGateway::Deployment",
     },
     "testapiDeploymentStageprodFCB742EA": Object {
+      "DependsOn": Array [
+        "testapiAccount1FFC3696",
+      ],
       "Properties": Object {
         "DeploymentId": Object {
           "Ref": "testapiDeployment914C6494ece85eba3b8c2309358325dcee897940",
