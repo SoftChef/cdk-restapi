@@ -5,11 +5,14 @@ import {
   LambdaIntegration,
   Resource,
   RestApi as AwsRestApi,
+  StageOptions,
 } from 'aws-cdk-lib/aws-apigateway';
 import {
   Construct,
 } from 'constructs';
-import { RestApiResourceProps } from './resource';
+import {
+  RestApiResourceProps,
+} from './resource';
 
 export interface RestApiProps {
   /**
@@ -26,6 +29,11 @@ export interface RestApiProps {
   readonly enableCors?: boolean;
   /**
    * Specify globally AuthorizationType by aws-AuthorizationType, default is NONE
+   * Specify StageOptions
+   */
+  readonly deployOptions?: StageOptions;
+  /**
+   * Specify globally AuthorizationType by aws-apigateway.AuthorizationType, default is NONE
    */
   readonly authorizationType?: AuthorizationType;
   /**
@@ -36,13 +44,13 @@ export interface RestApiProps {
 
 export class RestApi extends Construct {
 
-  private _globalAuthorizationType?: AuthorizationType | undefined;
+  private globalAuthorizationType?: AuthorizationType | undefined;
 
-  private _globalAuthorizer?: IAuthorizer | undefined;
+  private globalAuthorizer?: IAuthorizer | undefined;
 
-  private _restApi: AwsRestApi;
+  private awsRestApi: AwsRestApi;
 
-  private _resources: {
+  private resources: {
     [key: string]: Resource;
   } = {};
 
@@ -74,25 +82,29 @@ export class RestApi extends Construct {
       };
     }
 
+    if (props.deployOptions) {
+      restApiProps.deployOptions = props.deployOptions;
+    }
+
     if (props.authorizationType) {
-      this._globalAuthorizationType = props.authorizationType;
+      this.globalAuthorizationType = props.authorizationType;
     }
 
     if (props.authorizer) {
-      this._globalAuthorizer = props.authorizer;
+      this.globalAuthorizer = props.authorizer;
     }
     // Use custom or create new
-    this._restApi = props.restApi ?? new AwsRestApi(this, this.node.id, restApiProps);
+    this.awsRestApi = props.restApi ?? new AwsRestApi(this, this.node.id, restApiProps);
     // Define resources
     this.addResources(props.resources);
   }
 
   get restApiId(): string {
-    return this._restApi.restApiId;
+    return this.awsRestApi.restApiId;
   }
 
   get url(): string {
-    return this._restApi.url;
+    return this.awsRestApi.url;
   }
 
   public addResources(resources: RestApiResourceProps[]): this {
@@ -106,17 +118,17 @@ export class RestApi extends Construct {
     const path: string[] = `/${resource.path.replace(/^\/{1}/, '')}`.split('/');
     const lastPath = path.reduce((previous, current, index) => {
       const part = `${previous}/${current}`;
-      if (!this._resources[part]) {
+      if (!this.resources[part]) {
         if (index === 1) {
-          this._resources[part] = this._restApi.root.addResource(current);
+          this.resources[part] = this.awsRestApi.root.addResource(current);
         } else {
-          this._resources[part] = this._resources[previous].addResource(current);
+          this.resources[part] = this.resources[previous].addResource(current);
         }
       }
       return part;
     });
     const authorizationType: AuthorizationType = resource.authorizationType
-      ?? this._globalAuthorizationType
+      ?? this.globalAuthorizationType
       ?? AuthorizationType.NONE;
     switch (authorizationType) {
       case AuthorizationType.COGNITO:
@@ -124,12 +136,12 @@ export class RestApi extends Construct {
         let authorizer: IAuthorizer;
         if (resource.authorizer) {
           authorizer = resource.authorizer;
-        } else if (this._globalAuthorizer) {
-          authorizer = this._globalAuthorizer;
+        } else if (this.globalAuthorizer) {
+          authorizer = this.globalAuthorizer;
         } else {
           throw new Error('You specify authorization type is COGNITO, but not specify authorizer.');
         }
-        this._resources[lastPath].addMethod(
+        this.resources[lastPath].addMethod(
           resource.httpMethod.toString(),
           new LambdaIntegration(resource.lambdaFunction),
           {
@@ -139,7 +151,7 @@ export class RestApi extends Construct {
         );
         break;
       case AuthorizationType.IAM:
-        this._resources[lastPath].addMethod(
+        this.resources[lastPath].addMethod(
           resource.httpMethod.toString(),
           new LambdaIntegration(resource.lambdaFunction),
           {
@@ -149,7 +161,7 @@ export class RestApi extends Construct {
         break;
       case AuthorizationType.NONE:
       default:
-        this._resources[lastPath].addMethod(
+        this.resources[lastPath].addMethod(
           resource.httpMethod.toString(),
           new LambdaIntegration(resource.lambdaFunction),
         );
