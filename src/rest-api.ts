@@ -1,5 +1,15 @@
-import * as apigateway from '@aws-cdk/aws-apigateway';
-import * as cdk from '@aws-cdk/core';
+import {
+  AuthorizationType,
+  Cors,
+  IAuthorizer,
+  LambdaIntegration,
+  Resource,
+  RestApi as AwsRestApi,
+  StageOptions,
+} from 'aws-cdk-lib/aws-apigateway';
+import {
+  Construct,
+} from 'constructs';
 import {
   RestApiResourceProps,
 } from './resource';
@@ -8,7 +18,7 @@ export interface RestApiProps {
   /**
    * Custom RestApi
    */
-  readonly restApi?: apigateway.RestApi;
+  readonly restApi?: AwsRestApi;
   /**
    * Define Rest API resources
    */
@@ -18,32 +28,33 @@ export interface RestApiProps {
    */
   readonly enableCors?: boolean;
   /**
+   * Specify globally AuthorizationType by aws-AuthorizationType, default is NONE
    * Specify StageOptions
    */
-  readonly deployOptions?: apigateway.StageOptions;
+  readonly deployOptions?: StageOptions;
   /**
    * Specify globally AuthorizationType by aws-apigateway.AuthorizationType, default is NONE
    */
-  readonly authorizationType?: apigateway.AuthorizationType;
+  readonly authorizationType?: AuthorizationType;
   /**
-   * Specify globally Authorizer by aws-apigateway.Authorizer, default is null
+   * Specify globally Authorizer by aws-Authorizer, default is null
    */
-  readonly authorizer?: apigateway.IAuthorizer | undefined;
+  readonly authorizer?: IAuthorizer | undefined;
 }
 
-export class RestApi extends cdk.Construct {
+export class RestApi extends Construct {
 
-  private globalAuthorizationType?: apigateway.AuthorizationType | undefined;
+  private globalAuthorizationType?: AuthorizationType | undefined;
 
-  private globalAuthorizer?: apigateway.IAuthorizer | undefined;
+  private globalAuthorizer?: IAuthorizer | undefined;
 
-  private restApi: apigateway.RestApi;
+  private awsRestApi: AwsRestApi;
 
   private resources: {
-    [key: string]: apigateway.Resource;
+    [key: string]: Resource;
   } = {};
 
-  constructor(scope: cdk.Construct, id: string, props: RestApiProps) {
+  constructor(scope: Construct, id: string, props: RestApiProps) {
     super(scope, id);
 
     let restApiProps: {
@@ -52,8 +63,8 @@ export class RestApi extends cdk.Construct {
 
     if (props.enableCors !== false) {
       restApiProps.defaultCorsPreflightOptions = {
-        allowMethods: apigateway.Cors.ALL_METHODS,
-        allowOrigins: apigateway.Cors.ALL_ORIGINS,
+        allowMethods: Cors.ALL_METHODS,
+        allowOrigins: Cors.ALL_ORIGINS,
         allowHeaders: [
           'Origin',
           'Content-Type',
@@ -83,17 +94,17 @@ export class RestApi extends cdk.Construct {
       this.globalAuthorizer = props.authorizer;
     }
     // Use custom or create new
-    this.restApi = props.restApi ?? new apigateway.RestApi(this, this.node.id, restApiProps);
+    this.awsRestApi = props.restApi ?? new AwsRestApi(this, this.node.id, restApiProps);
     // Define resources
     this.addResources(props.resources);
   }
 
   get restApiId(): string {
-    return this.restApi.restApiId;
+    return this.awsRestApi.restApiId;
   }
 
   get url(): string {
-    return this.restApi.url;
+    return this.awsRestApi.url;
   }
 
   public addResources(resources: RestApiResourceProps[]): this {
@@ -109,20 +120,20 @@ export class RestApi extends cdk.Construct {
       const part = `${previous}/${current}`;
       if (!this.resources[part]) {
         if (index === 1) {
-          this.resources[part] = this.restApi.root.addResource(current);
+          this.resources[part] = this.awsRestApi.root.addResource(current);
         } else {
           this.resources[part] = this.resources[previous].addResource(current);
         }
       }
       return part;
     });
-    const authorizationType: apigateway.AuthorizationType = resource.authorizationType
+    const authorizationType: AuthorizationType = resource.authorizationType
       ?? this.globalAuthorizationType
-      ?? apigateway.AuthorizationType.NONE;
+      ?? AuthorizationType.NONE;
     switch (authorizationType) {
-      case apigateway.AuthorizationType.COGNITO:
-      case apigateway.AuthorizationType.CUSTOM:
-        let authorizer: apigateway.IAuthorizer;
+      case AuthorizationType.COGNITO:
+      case AuthorizationType.CUSTOM:
+        let authorizer: IAuthorizer;
         if (resource.authorizer) {
           authorizer = resource.authorizer;
         } else if (this.globalAuthorizer) {
@@ -132,27 +143,27 @@ export class RestApi extends cdk.Construct {
         }
         this.resources[lastPath].addMethod(
           resource.httpMethod.toString(),
-          new apigateway.LambdaIntegration(resource.lambdaFunction),
+          new LambdaIntegration(resource.lambdaFunction),
           {
-            authorizationType: apigateway.AuthorizationType.COGNITO,
+            authorizationType: AuthorizationType.COGNITO,
             authorizer: authorizer,
           },
         );
         break;
-      case apigateway.AuthorizationType.IAM:
+      case AuthorizationType.IAM:
         this.resources[lastPath].addMethod(
           resource.httpMethod.toString(),
-          new apigateway.LambdaIntegration(resource.lambdaFunction),
+          new LambdaIntegration(resource.lambdaFunction),
           {
-            authorizationType: apigateway.AuthorizationType.IAM,
+            authorizationType: AuthorizationType.IAM,
           },
         );
         break;
-      case apigateway.AuthorizationType.NONE:
+      case AuthorizationType.NONE:
       default:
         this.resources[lastPath].addMethod(
           resource.httpMethod.toString(),
-          new apigateway.LambdaIntegration(resource.lambdaFunction),
+          new LambdaIntegration(resource.lambdaFunction),
         );
     }
     return this;

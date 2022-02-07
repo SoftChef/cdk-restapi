@@ -11,15 +11,15 @@ const project = new awscdk.AwsCdkConstructLibrary({
   name: PROJECT_NAME,
   description: PROJECT_DESCRIPTION,
   repositoryUrl: 'https://github.com/softchef/cdk-restapi.git',
-  cdkVersion: '1.73.0',
+  cdkVersion: '2.1.0',
+  majorVersion: 2,
   defaultReleaseBranch: 'main',
-  cdkDependencies: [
-    '@aws-cdk/core',
-    '@aws-cdk/aws-apigateway',
-    '@aws-cdk/aws-lambda',
-    '@aws-cdk/aws-lambda-nodejs',
-    '@aws-cdk/aws-cognito',
-  ],
+  releaseBranches: {
+    cdkv1: {
+      npmDistTag: 'cdkv1',
+      majorVersion: 1,
+    },
+  },
   depsUpgradeOptions: {
     ignoreProjen: false,
     workflowOptions: {
@@ -32,10 +32,10 @@ const project = new awscdk.AwsCdkConstructLibrary({
     allowedUsernames: ['MinCheTsai'],
   },
   keywords: [
+    'aws',
     'cdk',
     'restapi',
   ],
-  testdir: 'src/__tests__',
 });
 
 const commonExclude = [
