@@ -1,6 +1,8 @@
 import * as apigateway from '@aws-cdk/aws-apigateway';
 import * as lambda from '@aws-cdk/aws-lambda';
-import { HttpMethod } from './http-method';
+import {
+  HttpMethod,
+} from './http-method';
 
 export interface RestApiResourceProps {
   /**

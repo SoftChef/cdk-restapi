@@ -32,7 +32,6 @@ jspm_packages/
 *.tgz
 .yarn-integrity
 .cache
-src/**/dist
 !/.projenrc.js
 /test-reports/
 junit.xml
@@ -55,6 +54,5 @@ tsconfig.json
 !/API.md
 cdk.out
 cdk.context.json
-images
 yarn-error.log
 !/.github/workflows/upgrade-main.yml
