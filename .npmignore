@@ -22,3 +22,7 @@ tsconfig.tsbuildinfo
 /lib/__tests__/
 /.eslintrc.json
 !.jsii
+cdk.out
+cdk.context.json
+images
+yarn-error.log
