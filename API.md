@@ -70,8 +70,8 @@ __Returns__:
 
 
 
-__Implements__: [IConstruct](#constructs-iconstruct), [IConstruct](#aws-cdk-core-iconstruct), [IConstruct](#constructs-iconstruct), [IDependable](#aws-cdk-core-idependable)
-__Extends__: [Construct](#aws-cdk-core-construct)
+__Implements__: [IConstruct](#constructs-iconstruct), [IDependable](#constructs-idependable)
+__Extends__: [Construct](#constructs-construct)
 
 ### Initializer
 
@@ -82,14 +82,14 @@ __Extends__: [Construct](#aws-cdk-core-construct)
 new RestApi(scope: Construct, id: string, props: RestApiProps)
 ```
 
-* **scope** (<code>[Construct](#aws-cdk-core-construct)</code>)  *No description*
+* **scope** (<code>[Construct](#constructs-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
 * **props** (<code>[RestApiProps](#softchef-cdk-restapi-restapiprops)</code>)  *No description*
   * **resources** (<code>Array<[RestApiResourceProps](#softchef-cdk-restapi-restapiresourceprops)></code>)  Define Rest API resources. 
-  * **authorizationType** (<code>[AuthorizationType](#aws-cdk-aws-apigateway-authorizationtype)</code>)  Specify globally AuthorizationType by aws-apigateway.AuthorizationType, default is NONE. __*Optional*__
-  * **authorizer** (<code>[IAuthorizer](#aws-cdk-aws-apigateway-iauthorizer)</code>)  Specify globally Authorizer by aws-apigateway.Authorizer, default is null. __*Optional*__
+  * **authorizationType** (<code>[aws_apigateway.AuthorizationType](#aws-cdk-lib-aws-apigateway-authorizationtype)</code>)  Specify globally AuthorizationType by aws-AuthorizationType, default is NONE. __*Optional*__
+  * **authorizer** (<code>[aws_apigateway.IAuthorizer](#aws-cdk-lib-aws-apigateway-iauthorizer)</code>)  Specify globally Authorizer by aws-Authorizer, default is null. __*Optional*__
   * **enableCors** (<code>boolean</code>)  Enable cors, default is true. __*Optional*__
-  * **restApi** (<code>[RestApi](#aws-cdk-aws-apigateway-restapi)</code>)  Custom RestApi. __*Optional*__
+  * **restApi** (<code>[aws_apigateway.RestApi](#aws-cdk-lib-aws-apigateway-restapi)</code>)  Custom RestApi. __*Optional*__
 
 
 
@@ -114,10 +114,10 @@ addResource(resource: RestApiResourceProps): RestApi
 
 * **resource** (<code>[RestApiResourceProps](#softchef-cdk-restapi-restapiresourceprops)</code>)  *No description*
   * **httpMethod** (<code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code>)  Specify HTTP Method. 
-  * **lambdaFunction** (<code>[IFunction](#aws-cdk-aws-lambda-ifunction)</code>)  Specify Lambda function. 
+  * **lambdaFunction** (<code>[aws_lambda.IFunction](#aws-cdk-lib-aws-lambda-ifunction)</code>)  Specify Lambda function. 
   * **path** (<code>string</code>)  Define Resource path. 
-  * **authorizationType** (<code>[AuthorizationType](#aws-cdk-aws-apigateway-authorizationtype)</code>)  Specify AuthorizationType by aws-apigateway.AuthorizationType, default is NONE. __*Optional*__
-  * **authorizer** (<code>[IAuthorizer](#aws-cdk-aws-apigateway-iauthorizer)</code>)  Specify Authorizer by aws-apigateway.Authorizer, default is null. __*Optional*__
+  * **authorizationType** (<code>[aws_apigateway.AuthorizationType](#aws-cdk-lib-aws-apigateway-authorizationtype)</code>)  Specify AuthorizationType by aws-apigateway.AuthorizationType, default is NONE. __*Optional*__
+  * **authorizer** (<code>[aws_apigateway.IAuthorizer](#aws-cdk-lib-aws-apigateway-iauthorizer)</code>)  Specify Authorizer by aws-Authorizer, default is null. __*Optional*__
 
 __Returns__:
 * <code>[RestApi](#softchef-cdk-restapi-restapi)</code>
@@ -147,10 +147,10 @@ __Returns__:
 Name | Type | Description 
 -----|------|-------------
 **resources** | <code>Array<[RestApiResourceProps](#softchef-cdk-restapi-restapiresourceprops)></code> | Define Rest API resources.
-**authorizationType**? | <code>[AuthorizationType](#aws-cdk-aws-apigateway-authorizationtype)</code> | Specify globally AuthorizationType by aws-apigateway.AuthorizationType, default is NONE.<br/>__*Optional*__
-**authorizer**? | <code>[IAuthorizer](#aws-cdk-aws-apigateway-iauthorizer)</code> | Specify globally Authorizer by aws-apigateway.Authorizer, default is null.<br/>__*Optional*__
+**authorizationType**? | <code>[aws_apigateway.AuthorizationType](#aws-cdk-lib-aws-apigateway-authorizationtype)</code> | Specify globally AuthorizationType by aws-AuthorizationType, default is NONE.<br/>__*Optional*__
+**authorizer**? | <code>[aws_apigateway.IAuthorizer](#aws-cdk-lib-aws-apigateway-iauthorizer)</code> | Specify globally Authorizer by aws-Authorizer, default is null.<br/>__*Optional*__
 **enableCors**? | <code>boolean</code> | Enable cors, default is true.<br/>__*Optional*__
-**restApi**? | <code>[RestApi](#aws-cdk-aws-apigateway-restapi)</code> | Custom RestApi.<br/>__*Optional*__
+**restApi**? | <code>[aws_apigateway.RestApi](#aws-cdk-lib-aws-apigateway-restapi)</code> | Custom RestApi.<br/>__*Optional*__
 
 
 
@@ -164,10 +164,10 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **httpMethod** | <code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code> | Specify HTTP Method.
-**lambdaFunction** | <code>[IFunction](#aws-cdk-aws-lambda-ifunction)</code> | Specify Lambda function.
+**lambdaFunction** | <code>[aws_lambda.IFunction](#aws-cdk-lib-aws-lambda-ifunction)</code> | Specify Lambda function.
 **path** | <code>string</code> | Define Resource path.
-**authorizationType**? | <code>[AuthorizationType](#aws-cdk-aws-apigateway-authorizationtype)</code> | Specify AuthorizationType by aws-apigateway.AuthorizationType, default is NONE.<br/>__*Optional*__
-**authorizer**? | <code>[IAuthorizer](#aws-cdk-aws-apigateway-iauthorizer)</code> | Specify Authorizer by aws-apigateway.Authorizer, default is null.<br/>__*Optional*__
+**authorizationType**? | <code>[aws_apigateway.AuthorizationType](#aws-cdk-lib-aws-apigateway-authorizationtype)</code> | Specify AuthorizationType by aws-apigateway.AuthorizationType, default is NONE.<br/>__*Optional*__
+**authorizer**? | <code>[aws_apigateway.IAuthorizer](#aws-cdk-lib-aws-apigateway-iauthorizer)</code> | Specify Authorizer by aws-Authorizer, default is null.<br/>__*Optional*__
 
 
 

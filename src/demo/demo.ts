@@ -1,6 +1,6 @@
 import * as path from 'path';
-import * as lambda from '@aws-cdk/aws-lambda-nodejs';
-import * as cdk from '@aws-cdk/core';
+import * as lambda from 'aws-cdk-lib/aws-lambda-nodejs';
+import * as cdk from 'aws-cdk-lib/core';
 import { RestApi, HttpMethod } from '../index';
 
 const app = new cdk.App();
