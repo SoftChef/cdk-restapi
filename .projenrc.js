@@ -20,7 +20,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
     '@aws-cdk/aws-cognito',
   ],
   depsUpgradeOptions: {
-    ignoreProjen: true,
+    ignoreProjen: false,
     workflowOptions: {
       labels: ['auto-approve', 'auto-merge'],
       secret: AUTOMATION_TOKEN,
