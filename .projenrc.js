@@ -1,6 +1,4 @@
-const { awscdk } = require('projen');
-
-const AUTOMATION_TOKEN = 'PROJEN_GITHUB_TOKEN';
+const { awscdk, AUTOMATION_TOKEN } = require('projen');
 
 const PROJECT_NAME = '@softchef/cdk-restapi';
 const PROJECT_DESCRIPTION = 'Easy to manage Rest-API';
@@ -10,10 +8,10 @@ const project = new awscdk.AwsCdkConstructLibrary({
   authorEmail: 'poke@softchef.com',
   authorUrl: 'https://www.softchef.com',
   authorOrganization: true,
-  cdkVersion: '1.73.0',
   name: PROJECT_NAME,
   description: PROJECT_DESCRIPTION,
   repositoryUrl: 'https://github.com/softchef/cdk-restapi.git',
+  cdkVersion: '1.73.0',
   defaultReleaseBranch: 'main',
   cdkDependencies: [
     '@aws-cdk/core',
@@ -38,15 +36,11 @@ const project = new awscdk.AwsCdkConstructLibrary({
     'restapi',
   ],
   testdir: 'src/__tests__',
-  gitignore: [
-    'src/**/dist',
-  ],
 });
 
 const commonExclude = [
   'cdk.out',
   'cdk.context.json',
-  'images',
   'yarn-error.log',
 ];
 
