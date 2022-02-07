@@ -53,4 +53,8 @@ junit.xml
 .jsii
 tsconfig.json
 !/API.md
+cdk.out
+cdk.context.json
+images
+yarn-error.log
 !/.github/workflows/upgrade-main.yml
