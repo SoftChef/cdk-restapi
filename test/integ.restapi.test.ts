@@ -1,31 +1,47 @@
-import { SynthUtils } from '@aws-cdk/assert';
-import '@aws-cdk/assert/jest';
-import * as apigateway from '@aws-cdk/aws-apigateway';
-import * as cognito from '@aws-cdk/aws-cognito';
-import * as lambda from '@aws-cdk/aws-lambda';
-import * as cdk from '@aws-cdk/core';
-import { RestApi, HttpMethod } from '../index';
+import {
+  Template,
+} from 'aws-cdk-lib/assertions';
+import {
+  AuthorizationType,
+  CognitoUserPoolsAuthorizer,
+} from 'aws-cdk-lib/aws-apigateway';
+import {
+  UserPool,
+} from 'aws-cdk-lib/aws-cognito';
+import {
+  Function,
+  InlineCode,
+  Runtime,
+} from 'aws-cdk-lib/aws-lambda';
+import {
+  App,
+  Stack,
+} from 'aws-cdk-lib/core';
+import {
+  RestApi,
+  HttpMethod,
+} from '../src/index';
 
 test('minimal usage', () => {
   // GIVEN
-  const app = new cdk.App();
-  const stack = new cdk.Stack(app, 'demo-stack');
-  const cognitoAuthorizer = new apigateway.CognitoUserPoolsAuthorizer(stack, 'Authorizer', {
+  const app = new App();
+  const stack = new Stack(app, 'demo-stack');
+  const cognitoAuthorizer = new CognitoUserPoolsAuthorizer(stack, 'Authorizer', {
     cognitoUserPools: [
-      new cognito.UserPool(stack, 'UserPool'),
+      new UserPool(stack, 'UserPool'),
     ],
   });
   const restApi = new RestApi(stack, 'test-api', {
-    authorizationType: apigateway.AuthorizationType.IAM,
+    authorizationType: AuthorizationType.IAM,
     resources: [
       {
         path: '/articles',
         httpMethod: HttpMethod.GET,
-        authorizationType: apigateway.AuthorizationType.NONE,
-        lambdaFunction: new lambda.Function(stack, 'GetArticles', {
-          runtime: lambda.Runtime.NODEJS_12_X,
+        authorizationType: AuthorizationType.NONE,
+        lambdaFunction: new Function(stack, 'GetArticles', {
+          runtime: Runtime.NODEJS_12_X,
           handler: 'index.handler',
-          code: new lambda.InlineCode(`
+          code: new InlineCode(`
             export async function handler() {
               return {
                 statusCode: 200,
@@ -40,10 +56,10 @@ test('minimal usage', () => {
       {
         path: '/articles',
         httpMethod: HttpMethod.POST,
-        lambdaFunction: new lambda.Function(stack, 'CreateArticle', {
-          runtime: lambda.Runtime.NODEJS_12_X,
+        lambdaFunction: new Function(stack, 'CreateArticle', {
+          runtime: Runtime.NODEJS_12_X,
           handler: 'index.handler',
-          code: new lambda.InlineCode(`
+          code: new InlineCode(`
             export async function handler() {
               return {
                 statusCode: 200,
@@ -58,11 +74,11 @@ test('minimal usage', () => {
       {
         path: '/articles/{articleId}',
         httpMethod: HttpMethod.GET,
-        authorizationType: apigateway.AuthorizationType.NONE,
-        lambdaFunction: new lambda.Function(stack, 'GetArticle', {
-          runtime: lambda.Runtime.NODEJS_12_X,
+        authorizationType: AuthorizationType.NONE,
+        lambdaFunction: new Function(stack, 'GetArticle', {
+          runtime: Runtime.NODEJS_12_X,
           handler: 'index.handler',
-          code: new lambda.InlineCode(`
+          code: new InlineCode(`
             export async function handler() {
               return {
                 statusCode: 200,
@@ -77,12 +93,12 @@ test('minimal usage', () => {
       {
         path: '/authors',
         httpMethod: HttpMethod.GET,
-        authorizationType: apigateway.AuthorizationType.COGNITO,
+        authorizationType: AuthorizationType.COGNITO,
         authorizer: cognitoAuthorizer,
-        lambdaFunction: new lambda.Function(stack, 'GetAuthors', {
-          runtime: lambda.Runtime.NODEJS_12_X,
+        lambdaFunction: new Function(stack, 'GetAuthors', {
+          runtime: Runtime.NODEJS_12_X,
           handler: 'index.handler',
-          code: new lambda.InlineCode(`
+          code: new InlineCode(`
             export async function handler() {
               return {
                 statusCode: 200,
@@ -100,12 +116,12 @@ test('minimal usage', () => {
   restApi.addResource({
     path: '/authors/{authorId}',
     httpMethod: HttpMethod.POST,
-    authorizationType: apigateway.AuthorizationType.COGNITO,
+    authorizationType: AuthorizationType.COGNITO,
     authorizer: cognitoAuthorizer,
-    lambdaFunction: new lambda.Function(stack, 'CreateAuthor', {
-      runtime: lambda.Runtime.NODEJS_12_X,
+    lambdaFunction: new Function(stack, 'CreateAuthor', {
+      runtime: Runtime.NODEJS_12_X,
       handler: 'index.handler',
-      code: new lambda.InlineCode(`
+      code: new InlineCode(`
         export async function handler() {
           return {
             statusCode: 200,
@@ -132,65 +148,66 @@ test('minimal usage', () => {
   const expectCognitoAuthorizer = {
     Ref: 'AuthorizerBD825682',
   };
-  expect(SynthUtils.synthesize(stack).template).toMatchSnapshot();
-  expect(stack).toHaveResourceLike('AWS::ApiGateway::RestApi', {
+  const template = Template.fromStack(stack);
+  expect(template.toJSON()).toMatchSnapshot();
+  template.hasResourceProperties('AWS::ApiGateway::RestApi', {
     Name: 'test-api',
   });
-  expect(stack).toHaveResourceLike('AWS::ApiGateway::Resource', {
+  template.hasResourceProperties('AWS::ApiGateway::Resource', {
     PathPart: 'articles',
   });
-  expect(stack).toHaveResourceLike('AWS::ApiGateway::Resource', {
+  template.hasResourceProperties('AWS::ApiGateway::Resource', {
     PathPart: '{articleId}',
   });
-  expect(stack).toCountResources('AWS::ApiGateway::Resource', 4);
-  expect(stack).toHaveResourceLike('AWS::ApiGateway::Resource', {
+  template.resourceCountIs('AWS::ApiGateway::Resource', 4);
+  template.hasResourceProperties('AWS::ApiGateway::Resource', {
     PathPart: 'articles',
     RestApiId: expectRestApiId,
   }); // testapiarticlesFD498DE1
-  expect(stack).toCountResources('AWS::ApiGateway::Method', 10);
+  template.resourceCountIs('AWS::ApiGateway::Method', 10);
   // GET:/articles
-  expect(stack).toHaveResourceLike('AWS::ApiGateway::Method', {
+  template.hasResourceProperties('AWS::ApiGateway::Method', {
     HttpMethod: 'GET',
     RestApiId: expectRestApiId,
     ResourceId: expectArticlesResourceId,
-    AuthorizationType: apigateway.AuthorizationType.NONE,
+    AuthorizationType: AuthorizationType.NONE,
   });
   // POST:/articles
-  expect(stack).toHaveResourceLike('AWS::ApiGateway::Method', {
+  template.hasResourceProperties('AWS::ApiGateway::Method', {
     HttpMethod: 'POST',
     RestApiId: expectRestApiId,
     ResourceId: expectArticlesResourceId,
-    AuthorizationType: apigateway.AuthorizationType.IAM,
+    AuthorizationType: AuthorizationType.IAM,
   });
   // OPTIONS:/articles
-  expect(stack).toHaveResourceLike('AWS::ApiGateway::Method', {
+  template.hasResourceProperties('AWS::ApiGateway::Method', {
     HttpMethod: 'OPTIONS',
     RestApiId: expectRestApiId,
     ResourceId: expectArticlesResourceId,
   });
   // GET:/articles/{articleId}
-  expect(stack).toHaveResourceLike('AWS::ApiGateway::Method', {
+  template.hasResourceProperties('AWS::ApiGateway::Method', {
     HttpMethod: 'GET',
     RestApiId: expectRestApiId,
     ResourceId: expectArticleIdResourceId,
-    AuthorizationType: apigateway.AuthorizationType.NONE,
+    AuthorizationType: AuthorizationType.NONE,
   });
   // OPTIONS:/articles/{articleId}
-  expect(stack).toHaveResourceLike('AWS::ApiGateway::Method', {
+  template.hasResourceProperties('AWS::ApiGateway::Method', {
     HttpMethod: 'OPTIONS',
     RestApiId: expectRestApiId,
     ResourceId: expectArticleIdResourceId,
   });
   // GET:/authors
-  expect(stack).toHaveResourceLike('AWS::ApiGateway::Method', {
+  template.hasResourceProperties('AWS::ApiGateway::Method', {
     HttpMethod: 'GET',
     RestApiId: expectRestApiId,
     ResourceId: expectAuthorsResourceId,
-    AuthorizationType: apigateway.AuthorizationType.COGNITO,
+    AuthorizationType: AuthorizationType.COGNITO,
     AuthorizerId: expectCognitoAuthorizer,
   });
   // OPTIONS:/authors
-  expect(stack).toHaveResourceLike('AWS::ApiGateway::Method', {
+  template.hasResourceProperties('AWS::ApiGateway::Method', {
     HttpMethod: 'OPTIONS',
     RestApiId: expectRestApiId,
     ResourceId: expectAuthorsResourceId,

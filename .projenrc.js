@@ -1,26 +1,27 @@
-const { awscdk } = require('projen');
+const { awscdk, AUTOMATION_TOKEN } = require('projen');
 
-const AUTOMATION_TOKEN = 'PROJEN_GITHUB_TOKEN';
+const PROJECT_NAME = '@softchef/cdk-restapi';
+const PROJECT_DESCRIPTION = 'Easy to manage Rest-API';
 
 const project = new awscdk.AwsCdkConstructLibrary({
-  author: 'SoftChef',
+  authorName: 'SoftChef',
   authorEmail: 'poke@softchef.com',
   authorUrl: 'https://www.softchef.com',
   authorOrganization: true,
-  cdkVersion: '1.73.0',
-  defaultReleaseBranch: 'main',
-  name: '@softchef/cdk-restapi',
-  description: 'Easy to manage Rest-API',
+  name: PROJECT_NAME,
+  description: PROJECT_DESCRIPTION,
   repositoryUrl: 'https://github.com/softchef/cdk-restapi.git',
-  cdkDependencies: [
-    '@aws-cdk/core',
-    '@aws-cdk/aws-apigateway',
-    '@aws-cdk/aws-lambda',
-    '@aws-cdk/aws-lambda-nodejs',
-    '@aws-cdk/aws-cognito',
-  ],
+  cdkVersion: '2.1.0',
+  majorVersion: 2,
+  defaultReleaseBranch: 'main',
+  releaseBranches: {
+    cdkv1: {
+      npmDistTag: 'cdkv1',
+      majorVersion: 1,
+    },
+  },
   depsUpgradeOptions: {
-    ignoreProjen: true,
+    ignoreProjen: false,
     workflowOptions: {
       labels: ['auto-approve', 'auto-merge'],
       secret: AUTOMATION_TOKEN,
@@ -31,13 +32,19 @@ const project = new awscdk.AwsCdkConstructLibrary({
     allowedUsernames: ['MinCheTsai'],
   },
   keywords: [
+    'aws',
     'cdk',
     'restapi',
   ],
-  testdir: 'src/__tests__',
-  gitignore: [
-    'src/**/dist',
-  ],
 });
+
+const commonExclude = [
+  'cdk.out',
+  'cdk.context.json',
+  'yarn-error.log',
+];
+
+project.npmignore.exclude(...commonExclude);
+project.gitignore.exclude(...commonExclude);
 
 project.synth();
