@@ -2,6 +2,7 @@ import {
   AuthorizationType,
   IAuthorizer,
   Integration,
+  MethodOptions,
 } from 'aws-cdk-lib/aws-apigateway';
 import {
   IFunction,
@@ -39,4 +40,9 @@ export interface RestApiResourceProps {
    * @default undefined
    */
   readonly integration?: Integration;
+  /**
+   * Specify method options
+   * @default undefined
+   */
+  readonly methodOptions?: MethodOptions;
 }

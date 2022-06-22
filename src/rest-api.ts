@@ -158,6 +158,7 @@ export class RestApi extends Construct {
           resource.httpMethod.toString(),
           integration,
           {
+            ...resource.methodOptions,
             authorizationType: AuthorizationType.COGNITO,
             authorizer: authorizer,
           },
@@ -168,6 +169,7 @@ export class RestApi extends Construct {
           resource.httpMethod.toString(),
           integration,
           {
+            ...resource.methodOptions,
             authorizationType: AuthorizationType.IAM,
           },
         );
@@ -177,6 +179,7 @@ export class RestApi extends Construct {
         this.resources[lastPath].addMethod(
           resource.httpMethod.toString(),
           integration,
+          resource.methodOptions,
         );
     }
     return this;

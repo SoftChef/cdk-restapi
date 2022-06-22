@@ -120,6 +120,7 @@ addResource(resource: RestApiResourceProps): RestApi
   * **authorizer** (<code>[aws_apigateway.IAuthorizer](#aws-cdk-lib-aws-apigateway-iauthorizer)</code>)  Specify Authorizer by aws-Authorizer. __*Default*__: undefined
   * **integration** (<code>[aws_apigateway.Integration](#aws-cdk-lib-aws-apigateway-integration)</code>)  Specify integration. __*Default*__: undefined
   * **lambdaFunction** (<code>[aws_lambda.IFunction](#aws-cdk-lib-aws-lambda-ifunction)</code>)  Specify Lambda function. __*Default*__: undefined
+  * **methodOptions** (<code>[aws_apigateway.MethodOptions](#aws-cdk-lib-aws-apigateway-methodoptions)</code>)  Specify method options. __*Default*__: undefined
 
 __Returns__:
 * <code>[RestApi](#softchef-cdk-restapi-restapi)</code>
@@ -172,6 +173,7 @@ Name | Type | Description
 **authorizer**? | <code>[aws_apigateway.IAuthorizer](#aws-cdk-lib-aws-apigateway-iauthorizer)</code> | Specify Authorizer by aws-Authorizer.<br/>__*Default*__: undefined
 **integration**? | <code>[aws_apigateway.Integration](#aws-cdk-lib-aws-apigateway-integration)</code> | Specify integration.<br/>__*Default*__: undefined
 **lambdaFunction**? | <code>[aws_lambda.IFunction](#aws-cdk-lib-aws-lambda-ifunction)</code> | Specify Lambda function.<br/>__*Default*__: undefined
+**methodOptions**? | <code>[aws_apigateway.MethodOptions](#aws-cdk-lib-aws-apigateway-methodoptions)</code> | Specify method options.<br/>__*Default*__: undefined
 
 
 
