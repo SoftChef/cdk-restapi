@@ -6,7 +6,7 @@ import {
   VpcLink,
 } from 'aws-cdk-lib/aws-apigateway';
 import {
-  ILoadBalancerV2,
+  INetworkLoadBalancer,
 } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import {
   IFunction,
@@ -41,8 +41,10 @@ export interface RestApiResourceProps {
   readonly lambdaFunction?: IFunction;
   /**
    * Specify VPC Link to integration
+   * Only supported Network Load Balancer
+   * https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html#http-api-vs-rest.differences.management
    */
-  readonly vpcLink?: [VpcLink, ILoadBalancerV2];
+  readonly vpcLink?: [VpcLink, INetworkLoadBalancer];
   /**
    * Specify integration
    * @default undefined
