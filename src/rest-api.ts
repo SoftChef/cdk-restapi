@@ -118,10 +118,14 @@ export class RestApi extends Construct {
   public addResource(resource: RestApiResourceProps): this {
     const path: string[] = `/${resource.path.replace(/^\/{1}/, '')}`.split('/');
     const lastPath = path.reduce((previous, current, index) => {
-      const part = `${previous}/${current}`;
+      const part: string = `${previous}/${current}`;
       if (!this.resources[part]) {
         if (index === 1) {
-          this.resources[part] = this.awsRestApi.root.addResource(current);
+          if (current === '') {
+            this.resources[part] = <Resource> this.awsRestApi.root;
+          } else {
+            this.resources[part] = this.awsRestApi.root.addResource(current);
+          }
         } else {
           this.resources[part] = this.resources[previous].addResource(current);
         }
