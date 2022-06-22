@@ -3,7 +3,11 @@ import {
   IAuthorizer,
   Integration,
   MethodOptions,
+  VpcLink,
 } from 'aws-cdk-lib/aws-apigateway';
+import {
+  ILoadBalancerV2,
+} from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import {
   IFunction,
 } from 'aws-cdk-lib/aws-lambda';
@@ -31,10 +35,14 @@ export interface RestApiResourceProps {
    */
   readonly authorizer?: IAuthorizer;
   /**
-   * Specify Lambda function
+   * Specify Lambda function to integration
    * @default undefined
    */
   readonly lambdaFunction?: IFunction;
+  /**
+   * Specify VPC Link to integration
+   */
+  readonly vpcLink?: [VpcLink, ILoadBalancerV2];
   /**
    * Specify integration
    * @default undefined

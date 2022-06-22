@@ -1,9 +1,12 @@
 import {
   AuthorizationType,
+  ConnectionType,
   Cors,
   IAuthorizer,
   Integration,
+  IntegrationType,
   LambdaIntegration,
+  MethodOptions,
   Resource,
   RestApi as AwsRestApi,
   StageOptions,
@@ -136,8 +139,28 @@ export class RestApi extends Construct {
       ?? this.globalAuthorizationType
       ?? AuthorizationType.NONE;
     let integration: Integration;
+    let methodOptions: {
+      [key: string]: any;
+    } = {};
     if (resource.lambdaFunction) {
       integration = new LambdaIntegration(resource.lambdaFunction);
+    } else if (resource.vpcLink) {
+      const [vpcLink, loadBalancer] = resource.vpcLink;
+      integration = new Integration({
+        type: IntegrationType.HTTP,
+        integrationHttpMethod: resource.httpMethod.toString(),
+        uri: `http://${loadBalancer.loadBalancerDnsName}${resource.path}`,
+        options: {
+          connectionType: ConnectionType.VPC_LINK,
+          vpcLink: vpcLink,
+          integrationResponses: [{
+            statusCode: '200',
+          }],
+        },
+      });
+      methodOptions.methodResponses = [{
+        statusCode: '200',
+      }];
     } else if (resource.integration) {
       integration = resource.integration;
     } else {
@@ -154,34 +177,23 @@ export class RestApi extends Construct {
         } else {
           throw new Error('You specify authorization type is COGNITO, but not specify authorizer.');
         }
-        this.resources[lastPath].addMethod(
-          resource.httpMethod.toString(),
-          integration,
-          {
-            ...resource.methodOptions,
-            authorizationType: AuthorizationType.COGNITO,
-            authorizer: authorizer,
-          },
-        );
+        methodOptions.authorizationType = AuthorizationType.COGNITO;
+        methodOptions.authorizer = authorizer;
         break;
       case AuthorizationType.IAM:
-        this.resources[lastPath].addMethod(
-          resource.httpMethod.toString(),
-          integration,
-          {
-            ...resource.methodOptions,
-            authorizationType: AuthorizationType.IAM,
-          },
-        );
+        methodOptions.authorizationType = AuthorizationType.IAM;
         break;
       case AuthorizationType.NONE:
       default:
-        this.resources[lastPath].addMethod(
-          resource.httpMethod.toString(),
-          integration,
-          resource.methodOptions,
-        );
     }
+    this.resources[lastPath].addMethod(
+      resource.httpMethod.toString(),
+      integration,
+      {
+        ...resource.methodOptions,
+        ...<MethodOptions> methodOptions,
+      },
+    );
     return this;
   }
 }
