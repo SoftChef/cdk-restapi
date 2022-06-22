@@ -88,8 +88,9 @@ new RestApi(scope: Construct, id: string, props: RestApiProps)
   * **resources** (<code>Array<[RestApiResourceProps](#softchef-cdk-restapi-restapiresourceprops)></code>)  Define Rest API resources. 
   * **authorizationType** (<code>[aws_apigateway.AuthorizationType](#aws-cdk-lib-aws-apigateway-authorizationtype)</code>)  Specify globally AuthorizationType by aws-apigateway.AuthorizationType, default is NONE. __*Optional*__
   * **authorizer** (<code>[aws_apigateway.IAuthorizer](#aws-cdk-lib-aws-apigateway-iauthorizer)</code>)  Specify globally Authorizer by aws-Authorizer, default is null. __*Optional*__
-  * **deployOptions** (<code>[aws_apigateway.StageOptions](#aws-cdk-lib-aws-apigateway-stageoptions)</code>)  Specify globally AuthorizationType by aws-AuthorizationType, default is NONE Specify StageOptions. __*Optional*__
+  * **deployOptions** (<code>[aws_apigateway.StageOptions](#aws-cdk-lib-aws-apigateway-stageoptions)</code>)  Specify StageOptions. __*Optional*__
   * **enableCors** (<code>boolean</code>)  Enable cors, default is true. __*Optional*__
+  * **endpointConfiguration** (<code>[aws_apigateway.EndpointConfiguration](#aws-cdk-lib-aws-apigateway-endpointconfiguration)</code>)  Specify EndpointConfiguration. __*Optional*__
   * **restApi** (<code>[aws_apigateway.RestApi](#aws-cdk-lib-aws-apigateway-restapi)</code>)  Custom RestApi. __*Optional*__
 
 
@@ -153,8 +154,9 @@ Name | Type | Description
 **resources** | <code>Array<[RestApiResourceProps](#softchef-cdk-restapi-restapiresourceprops)></code> | Define Rest API resources.
 **authorizationType**? | <code>[aws_apigateway.AuthorizationType](#aws-cdk-lib-aws-apigateway-authorizationtype)</code> | Specify globally AuthorizationType by aws-apigateway.AuthorizationType, default is NONE.<br/>__*Optional*__
 **authorizer**? | <code>[aws_apigateway.IAuthorizer](#aws-cdk-lib-aws-apigateway-iauthorizer)</code> | Specify globally Authorizer by aws-Authorizer, default is null.<br/>__*Optional*__
-**deployOptions**? | <code>[aws_apigateway.StageOptions](#aws-cdk-lib-aws-apigateway-stageoptions)</code> | Specify globally AuthorizationType by aws-AuthorizationType, default is NONE Specify StageOptions.<br/>__*Optional*__
+**deployOptions**? | <code>[aws_apigateway.StageOptions](#aws-cdk-lib-aws-apigateway-stageoptions)</code> | Specify StageOptions.<br/>__*Optional*__
 **enableCors**? | <code>boolean</code> | Enable cors, default is true.<br/>__*Optional*__
+**endpointConfiguration**? | <code>[aws_apigateway.EndpointConfiguration](#aws-cdk-lib-aws-apigateway-endpointconfiguration)</code> | Specify EndpointConfiguration.<br/>__*Optional*__
 **restApi**? | <code>[aws_apigateway.RestApi](#aws-cdk-lib-aws-apigateway-restapi)</code> | Custom RestApi.<br/>__*Optional*__
 
 
