@@ -1,6 +1,7 @@
 import {
   AuthorizationType,
   IAuthorizer,
+  Integration,
 } from 'aws-cdk-lib/aws-apigateway';
 import {
   IFunction,
@@ -19,15 +20,23 @@ export interface RestApiResourceProps {
    */
   readonly httpMethod: HttpMethod;
   /**
-   * Specify AuthorizationType by aws-apigateway.AuthorizationType, default is NONE
+   * Specify AuthorizationType by aws-apigateway.AuthorizationType
+   * @default AuthorizationType.NONE
    */
   readonly authorizationType?: AuthorizationType;
   /**
-   * Specify Authorizer by aws-Authorizer, default is null
+   * Specify Authorizer by aws-Authorizer
+   * @default undefined
    */
-  readonly authorizer?: IAuthorizer | undefined;
+  readonly authorizer?: IAuthorizer;
   /**
    * Specify Lambda function
+   * @default undefined
    */
-  readonly lambdaFunction: IFunction;
+  readonly lambdaFunction?: IFunction;
+  /**
+   * Specify integration
+   * @default undefined
+   */
+  readonly integration?: Integration;
 }
