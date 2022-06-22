@@ -2,6 +2,7 @@ import {
   AuthorizationType,
   ConnectionType,
   Cors,
+  EndpointConfiguration,
   IAuthorizer,
   Integration,
   IntegrationType,
@@ -9,6 +10,7 @@ import {
   MethodOptions,
   Resource,
   RestApi as AwsRestApi,
+  RestApiProps as AwsRestApiProps,
   StageOptions,
 } from 'aws-cdk-lib/aws-apigateway';
 import {
@@ -32,7 +34,6 @@ export interface RestApiProps {
    */
   readonly enableCors?: boolean;
   /**
-   * Specify globally AuthorizationType by aws-AuthorizationType, default is NONE
    * Specify StageOptions
    */
   readonly deployOptions?: StageOptions;
@@ -43,7 +44,11 @@ export interface RestApiProps {
   /**
    * Specify globally Authorizer by aws-Authorizer, default is null
    */
-  readonly authorizer?: IAuthorizer | undefined;
+  readonly authorizer?: IAuthorizer;
+  /**
+   * Specify EndpointConfiguration
+   */
+  readonly endpointConfiguration?: EndpointConfiguration;
 }
 
 export class RestApi extends Construct {
@@ -86,9 +91,9 @@ export class RestApi extends Construct {
       };
     }
 
-    if (props.deployOptions) {
-      restApiProps.deployOptions = props.deployOptions;
-    }
+    restApiProps.deployOptions = props.deployOptions;
+
+    restApiProps.endpointConfiguration = props.endpointConfiguration;
 
     if (props.authorizationType) {
       this.globalAuthorizationType = props.authorizationType;
@@ -97,8 +102,9 @@ export class RestApi extends Construct {
     if (props.authorizer) {
       this.globalAuthorizer = props.authorizer;
     }
+
     // Use custom or create new
-    this.awsRestApi = props.restApi ?? new AwsRestApi(this, this.node.id, restApiProps);
+    this.awsRestApi = props.restApi ?? new AwsRestApi(this, this.node.id, <AwsRestApiProps> restApiProps);
     // Define resources
     this.addResources(props.resources);
   }
