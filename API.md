@@ -115,10 +115,11 @@ addResource(resource: RestApiResourceProps): RestApi
 
 * **resource** (<code>[RestApiResourceProps](#softchef-cdk-restapi-restapiresourceprops)</code>)  *No description*
   * **httpMethod** (<code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code>)  Specify HTTP Method. 
-  * **lambdaFunction** (<code>[aws_lambda.IFunction](#aws-cdk-lib-aws-lambda-ifunction)</code>)  Specify Lambda function. 
   * **path** (<code>string</code>)  Define Resource path. 
-  * **authorizationType** (<code>[aws_apigateway.AuthorizationType](#aws-cdk-lib-aws-apigateway-authorizationtype)</code>)  Specify AuthorizationType by aws-apigateway.AuthorizationType, default is NONE. __*Optional*__
-  * **authorizer** (<code>[aws_apigateway.IAuthorizer](#aws-cdk-lib-aws-apigateway-iauthorizer)</code>)  Specify Authorizer by aws-Authorizer, default is null. __*Optional*__
+  * **authorizationType** (<code>[aws_apigateway.AuthorizationType](#aws-cdk-lib-aws-apigateway-authorizationtype)</code>)  Specify AuthorizationType by aws-apigateway.AuthorizationType. __*Default*__: AuthorizationType.NONE
+  * **authorizer** (<code>[aws_apigateway.IAuthorizer](#aws-cdk-lib-aws-apigateway-iauthorizer)</code>)  Specify Authorizer by aws-Authorizer. __*Default*__: undefined
+  * **integration** (<code>[aws_apigateway.Integration](#aws-cdk-lib-aws-apigateway-integration)</code>)  Specify integration. __*Default*__: undefined
+  * **lambdaFunction** (<code>[aws_lambda.IFunction](#aws-cdk-lib-aws-lambda-ifunction)</code>)  Specify Lambda function. __*Default*__: undefined
 
 __Returns__:
 * <code>[RestApi](#softchef-cdk-restapi-restapi)</code>
@@ -166,10 +167,11 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **httpMethod** | <code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code> | Specify HTTP Method.
-**lambdaFunction** | <code>[aws_lambda.IFunction](#aws-cdk-lib-aws-lambda-ifunction)</code> | Specify Lambda function.
 **path** | <code>string</code> | Define Resource path.
-**authorizationType**? | <code>[aws_apigateway.AuthorizationType](#aws-cdk-lib-aws-apigateway-authorizationtype)</code> | Specify AuthorizationType by aws-apigateway.AuthorizationType, default is NONE.<br/>__*Optional*__
-**authorizer**? | <code>[aws_apigateway.IAuthorizer](#aws-cdk-lib-aws-apigateway-iauthorizer)</code> | Specify Authorizer by aws-Authorizer, default is null.<br/>__*Optional*__
+**authorizationType**? | <code>[aws_apigateway.AuthorizationType](#aws-cdk-lib-aws-apigateway-authorizationtype)</code> | Specify AuthorizationType by aws-apigateway.AuthorizationType.<br/>__*Default*__: AuthorizationType.NONE
+**authorizer**? | <code>[aws_apigateway.IAuthorizer](#aws-cdk-lib-aws-apigateway-iauthorizer)</code> | Specify Authorizer by aws-Authorizer.<br/>__*Default*__: undefined
+**integration**? | <code>[aws_apigateway.Integration](#aws-cdk-lib-aws-apigateway-integration)</code> | Specify integration.<br/>__*Default*__: undefined
+**lambdaFunction**? | <code>[aws_lambda.IFunction](#aws-cdk-lib-aws-lambda-ifunction)</code> | Specify Lambda function.<br/>__*Default*__: undefined
 
 
 

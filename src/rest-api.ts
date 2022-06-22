@@ -2,6 +2,7 @@ import {
   AuthorizationType,
   Cors,
   IAuthorizer,
+  Integration,
   LambdaIntegration,
   Resource,
   RestApi as AwsRestApi,
@@ -130,6 +131,14 @@ export class RestApi extends Construct {
     const authorizationType: AuthorizationType = resource.authorizationType
       ?? this.globalAuthorizationType
       ?? AuthorizationType.NONE;
+    let integration: Integration;
+    if (resource.lambdaFunction) {
+      integration = new LambdaIntegration(resource.lambdaFunction);
+    } else if (resource.integration) {
+      integration = resource.integration;
+    } else {
+      throw new Error('Must provide integration props, support lambdaFunction, API Gateway Integration types');
+    }
     switch (authorizationType) {
       case AuthorizationType.COGNITO:
       case AuthorizationType.CUSTOM:
@@ -143,7 +152,7 @@ export class RestApi extends Construct {
         }
         this.resources[lastPath].addMethod(
           resource.httpMethod.toString(),
-          new LambdaIntegration(resource.lambdaFunction),
+          integration,
           {
             authorizationType: AuthorizationType.COGNITO,
             authorizer: authorizer,
@@ -153,7 +162,7 @@ export class RestApi extends Construct {
       case AuthorizationType.IAM:
         this.resources[lastPath].addMethod(
           resource.httpMethod.toString(),
-          new LambdaIntegration(resource.lambdaFunction),
+          integration,
           {
             authorizationType: AuthorizationType.IAM,
           },
@@ -163,7 +172,7 @@ export class RestApi extends Construct {
       default:
         this.resources[lastPath].addMethod(
           resource.httpMethod.toString(),
-          new LambdaIntegration(resource.lambdaFunction),
+          integration,
         );
     }
     return this;
