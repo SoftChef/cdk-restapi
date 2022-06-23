@@ -144,15 +144,14 @@ export class RestApi extends Construct {
     } = {};
     if (resource.lambdaFunction) {
       integration = new LambdaIntegration(resource.lambdaFunction);
-    } else if (resource.vpcLink) {
-      const [vpcLink, loadBalancer] = resource.vpcLink;
+    } else if (resource.networkLoadBalancer) {
       integration = new Integration({
-        type: IntegrationType.HTTP,
+        type: resource.vpcLink ? IntegrationType.HTTP : IntegrationType.HTTP_PROXY,
         integrationHttpMethod: resource.httpMethod.toString(),
-        uri: `http://${loadBalancer.loadBalancerDnsName}${resource.path}`,
+        uri: `http://${resource.networkLoadBalancer.loadBalancerDnsName}${resource.path}`,
         options: {
           connectionType: ConnectionType.VPC_LINK,
-          vpcLink: vpcLink,
+          vpcLink: resource.vpcLink ?? resource.vpcLinkProxy,
           integrationResponses: [{
             statusCode: '200',
           }],
