@@ -41,10 +41,18 @@ export interface RestApiResourceProps {
   readonly lambdaFunction?: IFunction;
   /**
    * Specify VPC Link to integration
+   */
+  readonly vpcLink?: VpcLink;
+  /**
+   * Specify VPC Link Proxy to integration
+   */
+  readonly vpcLinkProxy?: VpcLink;
+  /**
+   * Specify NLB with VPC Link to integration
    * Only supported Network Load Balancer
    * https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html#http-api-vs-rest.differences.management
    */
-  readonly vpcLink?: [VpcLink, INetworkLoadBalancer];
+  readonly networkLoadBalancer?: INetworkLoadBalancer;
   /**
    * Specify integration
    * @default undefined

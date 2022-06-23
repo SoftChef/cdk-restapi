@@ -122,7 +122,9 @@ addResource(resource: RestApiResourceProps): RestApi
   * **integration** (<code>[aws_apigateway.Integration](#aws-cdk-lib-aws-apigateway-integration)</code>)  Specify integration. __*Default*__: undefined
   * **lambdaFunction** (<code>[aws_lambda.IFunction](#aws-cdk-lib-aws-lambda-ifunction)</code>)  Specify Lambda function to integration. __*Default*__: undefined
   * **methodOptions** (<code>[aws_apigateway.MethodOptions](#aws-cdk-lib-aws-apigateway-methodoptions)</code>)  Specify method options. __*Default*__: undefined
-  * **vpcLink** (<code>json</code>)  Specify VPC Link to integration Only supported Network Load Balancer https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html#http-api-vs-rest.differences.management. __*Optional*__
+  * **networkLoadBalancer** (<code>[aws_elasticloadbalancingv2.INetworkLoadBalancer](#aws-cdk-lib-aws-elasticloadbalancingv2-inetworkloadbalancer)</code>)  Specify NLB with VPC Link to integration Only supported Network Load Balancer https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html#http-api-vs-rest.differences.management. __*Optional*__
+  * **vpcLink** (<code>[aws_apigateway.VpcLink](#aws-cdk-lib-aws-apigateway-vpclink)</code>)  Specify VPC Link to integration. __*Optional*__
+  * **vpcLinkProxy** (<code>[aws_apigateway.VpcLink](#aws-cdk-lib-aws-apigateway-vpclink)</code>)  Specify VPC Link Proxy to integration. __*Optional*__
 
 __Returns__:
 * <code>[RestApi](#softchef-cdk-restapi-restapi)</code>
@@ -177,7 +179,9 @@ Name | Type | Description
 **integration**? | <code>[aws_apigateway.Integration](#aws-cdk-lib-aws-apigateway-integration)</code> | Specify integration.<br/>__*Default*__: undefined
 **lambdaFunction**? | <code>[aws_lambda.IFunction](#aws-cdk-lib-aws-lambda-ifunction)</code> | Specify Lambda function to integration.<br/>__*Default*__: undefined
 **methodOptions**? | <code>[aws_apigateway.MethodOptions](#aws-cdk-lib-aws-apigateway-methodoptions)</code> | Specify method options.<br/>__*Default*__: undefined
-**vpcLink**? | <code>json</code> | Specify VPC Link to integration Only supported Network Load Balancer https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html#http-api-vs-rest.differences.management.<br/>__*Optional*__
+**networkLoadBalancer**? | <code>[aws_elasticloadbalancingv2.INetworkLoadBalancer](#aws-cdk-lib-aws-elasticloadbalancingv2-inetworkloadbalancer)</code> | Specify NLB with VPC Link to integration Only supported Network Load Balancer https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html#http-api-vs-rest.differences.management.<br/>__*Optional*__
+**vpcLink**? | <code>[aws_apigateway.VpcLink](#aws-cdk-lib-aws-apigateway-vpclink)</code> | Specify VPC Link to integration.<br/>__*Optional*__
+**vpcLinkProxy**? | <code>[aws_apigateway.VpcLink](#aws-cdk-lib-aws-apigateway-vpclink)</code> | Specify VPC Link Proxy to integration.<br/>__*Optional*__
 
 
 
