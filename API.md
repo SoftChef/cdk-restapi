@@ -123,6 +123,7 @@ addResource(resource: RestApiResourceProps): RestApi
   * **methodOptions** (<code>[aws_apigateway.MethodOptions](#aws-cdk-lib-aws-apigateway-methodoptions)</code>)  Specify method options. __*Default*__: undefined
   * **networkLoadBalancer** (<code>[aws_elasticloadbalancingv2.INetworkLoadBalancer](#aws-cdk-lib-aws-elasticloadbalancingv2-inetworkloadbalancer)</code>)  Specify NLB with VPC Link to integration Only supported Network Load Balancer https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html#http-api-vs-rest.differences.management. __*Optional*__
   * **vpcLink** (<code>[aws_apigateway.VpcLink](#aws-cdk-lib-aws-apigateway-vpclink)</code>)  Specify VPC Link to integration. __*Optional*__
+  * **vpcLinkIntegrationOptions** (<code>[aws_apigateway.IntegrationOptions](#aws-cdk-lib-aws-apigateway-integrationoptions)</code>)  Speficy VPC Link integration options. __*Optional*__
   * **vpcLinkProxy** (<code>[aws_apigateway.VpcLink](#aws-cdk-lib-aws-apigateway-vpclink)</code>)  Specify VPC Link Proxy to integration. __*Optional*__
 
 __Returns__:
@@ -179,6 +180,7 @@ Name | Type | Description
 **methodOptions**? | <code>[aws_apigateway.MethodOptions](#aws-cdk-lib-aws-apigateway-methodoptions)</code> | Specify method options.<br/>__*Default*__: undefined
 **networkLoadBalancer**? | <code>[aws_elasticloadbalancingv2.INetworkLoadBalancer](#aws-cdk-lib-aws-elasticloadbalancingv2-inetworkloadbalancer)</code> | Specify NLB with VPC Link to integration Only supported Network Load Balancer https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html#http-api-vs-rest.differences.management.<br/>__*Optional*__
 **vpcLink**? | <code>[aws_apigateway.VpcLink](#aws-cdk-lib-aws-apigateway-vpclink)</code> | Specify VPC Link to integration.<br/>__*Optional*__
+**vpcLinkIntegrationOptions**? | <code>[aws_apigateway.IntegrationOptions](#aws-cdk-lib-aws-apigateway-integrationoptions)</code> | Speficy VPC Link integration options.<br/>__*Optional*__
 **vpcLinkProxy**? | <code>[aws_apigateway.VpcLink](#aws-cdk-lib-aws-apigateway-vpclink)</code> | Specify VPC Link Proxy to integration.<br/>__*Optional*__
 
 

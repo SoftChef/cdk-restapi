@@ -155,6 +155,7 @@ export class RestApi extends Construct {
           integrationResponses: [{
             statusCode: '200',
           }],
+          ...resource.vpcLinkIntegrationOptions,
         },
       });
       methodOptions.methodResponses = [{

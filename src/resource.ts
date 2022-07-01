@@ -2,6 +2,7 @@ import {
   AuthorizationType,
   IAuthorizer,
   Integration,
+  IntegrationOptions,
   MethodOptions,
   VpcLink,
 } from 'aws-cdk-lib/aws-apigateway';
@@ -47,6 +48,10 @@ export interface RestApiResourceProps {
    * Specify VPC Link Proxy to integration
    */
   readonly vpcLinkProxy?: VpcLink;
+  /**
+   * Speficy VPC Link integration options
+   */
+  readonly vpcLinkIntegrationOptions?: IntegrationOptions;
   /**
    * Specify NLB with VPC Link to integration
    * Only supported Network Load Balancer
