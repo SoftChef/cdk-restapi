@@ -1,5 +1,9 @@
 export class HttpMethod {
   /**
+   * HTTP ANY Method
+   */
+  public static readonly ANY = new HttpMethod('ANY');
+  /**
    * HTTP GET Method
   */
   public static readonly GET = new HttpMethod('GET');

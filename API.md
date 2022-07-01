@@ -41,6 +41,7 @@ new HttpMethod(method: string)
 Name | Type | Description 
 -----|------|-------------
 **method** | <code>string</code> | HTTP Method.
+*static* **ANY** | <code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code> | HTTP ANY Method.
 *static* **DELETE** | <code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code> | HTTP DELETE Method.
 *static* **GET** | <code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code> | HTTP GET Method.
 *static* **HEAD** | <code>[HttpMethod](#softchef-cdk-restapi-httpmethod)</code> | HTTP HEAD Method.
