@@ -163,7 +163,7 @@ test('minimal usage', () => {
   template.hasResourceProperties('AWS::ApiGateway::Resource', {
     PathPart: 'articles',
     RestApiId: expectRestApiId,
-  }); // testapiarticlesFD498DE1
+  });
   template.resourceCountIs('AWS::ApiGateway::Method', 10);
   // GET:/articles
   template.hasResourceProperties('AWS::ApiGateway::Method', {

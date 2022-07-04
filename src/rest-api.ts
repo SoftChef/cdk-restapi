@@ -119,7 +119,7 @@ export class RestApi extends Construct {
   }
 
   public addResource(resource: RestApiResourceProps): this {
-    const path: string[] = `/${resource.path.replace(/^\/{1}/, '')}`.split('/');
+    const path: string[] = `/${resource.path.replace(/^\/{1}/, '')}`.replace(/\?.*/, '').split('/');
     const lastPath = path.reduce((previous, current, index) => {
       const part: string = `${previous}/${current}`;
       if (!this.resources[part]) {
@@ -164,7 +164,7 @@ export class RestApi extends Construct {
         methodRequestParameters[`method.request.querystring.${keyName}`] = /\?$/.test(key);
         integrationRequestParameters[`integration.request.querystring.${keyName}`] = `method.request.querystring.${keyName}`;
       }
-      methodOptions.pathParameters = methodRequestParameters;
+      methodOptions.requestParameters = methodRequestParameters;
       integration = new Integration({
         type: resource.vpcLink ? IntegrationType.HTTP : IntegrationType.HTTP_PROXY,
         integrationHttpMethod: resource.httpMethod.toString(),

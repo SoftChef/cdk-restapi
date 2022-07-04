@@ -1,0 +1,1112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`minimal usage 1`] = `
+Object {
+  "Outputs": Object {
+    "testapiEndpoint807AB7FF": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "testapi85A023B7",
+            },
+            ".execute-api.",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            Object {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            Object {
+              "Ref": "testapiDeploymentStageprodFCB742EA",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "BootstrapVersion": Object {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": Object {
+    "NetworkLoadBalancer8E753273": Object {
+      "Properties": Object {
+        "LoadBalancerAttributes": Array [
+          Object {
+            "Key": "deletion_protection.enabled",
+            "Value": "false",
+          },
+        ],
+        "Scheme": "internal",
+        "Subnets": Array [
+          Object {
+            "Ref": "vpcPrivateSubnet1Subnet934893E8",
+          },
+          Object {
+            "Ref": "vpcPrivateSubnet2Subnet7031C2BA",
+          },
+        ],
+        "Type": "network",
+      },
+      "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+    },
+    "VpcLink42ED6FF0": Object {
+      "Properties": Object {
+        "Name": "demostackVpcLink9ED055E1",
+        "TargetArns": Array [
+          Object {
+            "Ref": "NetworkLoadBalancer8E753273",
+          },
+        ],
+      },
+      "Type": "AWS::ApiGateway::VpcLink",
+    },
+    "testapi85A023B7": Object {
+      "Properties": Object {
+        "Name": "test-api",
+      },
+      "Type": "AWS::ApiGateway::RestApi",
+    },
+    "testapiAccount1FFC3696": Object {
+      "DependsOn": Array [
+        "testapi85A023B7",
+      ],
+      "Properties": Object {
+        "CloudWatchRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "testapiCloudWatchRole142B3850",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ApiGateway::Account",
+    },
+    "testapiCloudWatchRole142B3850": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "apigateway.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "testapiDeployment914C64945c10258cced6cf9718f7002f38730bad": Object {
+      "DependsOn": Array [
+        "testapiarticlesarticleIdGET5646FA55",
+        "testapiarticlesarticleIdOPTIONS3BC3B55F",
+        "testapiarticlesarticleId55CCCAA7",
+        "testapiarticlesGET58C3C3FA",
+        "testapiarticlesOPTIONS238F105B",
+        "testapiarticlesPOST70DB0F69",
+        "testapiarticlesFD498DE1",
+        "testapiauthorsauthorTypeGETA7216B88",
+        "testapiauthorsauthorTypeOPTIONSF91D2DAE",
+        "testapiauthorsauthorType70B82750",
+        "testapiauthorsGET5E9C2DD4",
+        "testapiauthorsOPTIONSBB83FC68",
+        "testapiauthors6FAC66C5",
+        "testapiGETFAA5FA48",
+        "testapiOPTIONSFF62655B",
+      ],
+      "Properties": Object {
+        "Description": "Automatically created by the RestApi construct",
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Deployment",
+    },
+    "testapiDeploymentStageprodFCB742EA": Object {
+      "Properties": Object {
+        "DeploymentId": Object {
+          "Ref": "testapiDeployment914C64945c10258cced6cf9718f7002f38730bad",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+        "StageName": "prod",
+      },
+      "Type": "AWS::ApiGateway::Stage",
+    },
+    "testapiGETFAA5FA48": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "ConnectionId": Object {
+            "Ref": "VpcLink42ED6FF0",
+          },
+          "ConnectionType": "VPC_LINK",
+          "IntegrationHttpMethod": "GET",
+          "IntegrationResponses": Array [
+            Object {
+              "StatusCode": "200",
+            },
+          ],
+          "RequestParameters": Object {},
+          "Type": "HTTP_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "http://",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "NetworkLoadBalancer8E753273",
+                    "DNSName",
+                  ],
+                },
+                "/",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "StatusCode": "200",
+          },
+        ],
+        "RequestParameters": Object {},
+        "ResourceId": Object {
+          "Fn::GetAtt": Array [
+            "testapi85A023B7",
+            "RootResourceId",
+          ],
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiOPTIONSFF62655B": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Origin,Content-Type,Fetch-Mode,Accept,X-Amz-Date,Accept-Encoding,Authorization,cache-control,SyncCenter,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Fn::GetAtt": Array [
+            "testapi85A023B7",
+            "RootResourceId",
+          ],
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiarticlesFD498DE1": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "testapi85A023B7",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "articles",
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "testapiarticlesGET58C3C3FA": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "ConnectionId": Object {
+            "Ref": "VpcLink42ED6FF0",
+          },
+          "ConnectionType": "VPC_LINK",
+          "IntegrationHttpMethod": "GET",
+          "IntegrationResponses": Array [
+            Object {
+              "StatusCode": "200",
+            },
+          ],
+          "RequestParameters": Object {},
+          "Type": "HTTP_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "http://",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "NetworkLoadBalancer8E753273",
+                    "DNSName",
+                  ],
+                },
+                "/articles",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "StatusCode": "200",
+          },
+        ],
+        "RequestParameters": Object {},
+        "ResourceId": Object {
+          "Ref": "testapiarticlesFD498DE1",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiarticlesOPTIONS238F105B": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Origin,Content-Type,Fetch-Mode,Accept,X-Amz-Date,Accept-Encoding,Authorization,cache-control,SyncCenter,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "testapiarticlesFD498DE1",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiarticlesPOST70DB0F69": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "POST",
+        "Integration": Object {
+          "ConnectionId": Object {
+            "Ref": "VpcLink42ED6FF0",
+          },
+          "ConnectionType": "VPC_LINK",
+          "IntegrationHttpMethod": "POST",
+          "IntegrationResponses": Array [
+            Object {
+              "StatusCode": "200",
+            },
+          ],
+          "RequestParameters": Object {},
+          "Type": "HTTP_PROXY",
+          "Uri": "http://localhost:8080/api/articles",
+        },
+        "MethodResponses": Array [
+          Object {
+            "StatusCode": "200",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "testapiarticlesFD498DE1",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiarticlesarticleId55CCCAA7": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "testapiarticlesFD498DE1",
+        },
+        "PathPart": "{articleId}",
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "testapiarticlesarticleIdGET5646FA55": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "ConnectionId": Object {
+            "Ref": "VpcLink42ED6FF0",
+          },
+          "ConnectionType": "VPC_LINK",
+          "IntegrationHttpMethod": "GET",
+          "IntegrationResponses": Array [
+            Object {
+              "StatusCode": "200",
+            },
+          ],
+          "RequestParameters": Object {
+            "integration.request.path.articleId": "method.request.path.articleId",
+          },
+          "Type": "HTTP_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "http://",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "NetworkLoadBalancer8E753273",
+                    "DNSName",
+                  ],
+                },
+                "/articles/{articleId}",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "StatusCode": "200",
+          },
+        ],
+        "RequestParameters": Object {
+          "method.request.path.articleId": true,
+        },
+        "ResourceId": Object {
+          "Ref": "testapiarticlesarticleId55CCCAA7",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiarticlesarticleIdOPTIONS3BC3B55F": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Origin,Content-Type,Fetch-Mode,Accept,X-Amz-Date,Accept-Encoding,Authorization,cache-control,SyncCenter,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "testapiarticlesarticleId55CCCAA7",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiauthors6FAC66C5": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "testapi85A023B7",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "authors",
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "testapiauthorsGET5E9C2DD4": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "ConnectionId": Object {
+            "Ref": "VpcLink42ED6FF0",
+          },
+          "ConnectionType": "VPC_LINK",
+          "IntegrationHttpMethod": "GET",
+          "IntegrationResponses": Array [
+            Object {
+              "StatusCode": "200",
+            },
+          ],
+          "RequestParameters": Object {},
+          "Type": "HTTP",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "http://",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "NetworkLoadBalancer8E753273",
+                    "DNSName",
+                  ],
+                },
+                "/authors",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "StatusCode": "200",
+          },
+        ],
+        "RequestParameters": Object {},
+        "ResourceId": Object {
+          "Ref": "testapiauthors6FAC66C5",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiauthorsOPTIONSBB83FC68": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Origin,Content-Type,Fetch-Mode,Accept,X-Amz-Date,Accept-Encoding,Authorization,cache-control,SyncCenter,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "testapiauthors6FAC66C5",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiauthorsauthorType70B82750": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "testapiauthors6FAC66C5",
+        },
+        "PathPart": "{authorType}",
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "testapiauthorsauthorTypeGETA7216B88": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "ConnectionId": Object {
+            "Ref": "VpcLink42ED6FF0",
+          },
+          "ConnectionType": "VPC_LINK",
+          "IntegrationHttpMethod": "GET",
+          "IntegrationResponses": Array [
+            Object {
+              "StatusCode": "200",
+            },
+          ],
+          "RequestParameters": Object {
+            "integration.request.path.authorType": "method.request.path.authorType",
+            "integration.request.querystring.query": "method.request.querystring.query",
+          },
+          "Type": "HTTP",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "http://",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "NetworkLoadBalancer8E753273",
+                    "DNSName",
+                  ],
+                },
+                "/authors/{authorType}",
+              ],
+            ],
+          },
+        },
+        "MethodResponses": Array [
+          Object {
+            "StatusCode": "200",
+          },
+        ],
+        "RequestParameters": Object {
+          "method.request.path.authorType": true,
+          "method.request.querystring.query": false,
+        },
+        "ResourceId": Object {
+          "Ref": "testapiauthorsauthorType70B82750",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "testapiauthorsauthorTypeOPTIONSF91D2DAE": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "Integration": Object {
+          "IntegrationResponses": Array [
+            Object {
+              "ResponseParameters": Object {
+                "method.response.header.Access-Control-Allow-Headers": "'Origin,Content-Type,Fetch-Mode,Accept,X-Amz-Date,Accept-Encoding,Authorization,cache-control,SyncCenter,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,PUT,POST,DELETE,PATCH,HEAD'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+              },
+              "StatusCode": "204",
+            },
+          ],
+          "RequestTemplates": Object {
+            "application/json": "{ statusCode: 200 }",
+          },
+          "Type": "MOCK",
+        },
+        "MethodResponses": Array [
+          Object {
+            "ResponseParameters": Object {
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true,
+              "method.response.header.Access-Control-Allow-Origin": true,
+            },
+            "StatusCode": "204",
+          },
+        ],
+        "ResourceId": Object {
+          "Ref": "testapiauthorsauthorType70B82750",
+        },
+        "RestApiId": Object {
+          "Ref": "testapi85A023B7",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "vpcA2121C38": Object {
+      "Properties": Object {
+        "CidrBlock": "10.0.0.0/16",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "demo-stack/vpc",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::VPC",
+    },
+    "vpcIGWE57CBDCA": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "demo-stack/vpc",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::InternetGateway",
+    },
+    "vpcPrivateSubnet1DefaultRoute1AA8E2E5": Object {
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": Object {
+          "Ref": "vpcPublicSubnet1NATGateway9C16659E",
+        },
+        "RouteTableId": Object {
+          "Ref": "vpcPrivateSubnet1RouteTableB41A48CC",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "vpcPrivateSubnet1RouteTableAssociation67945127": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "vpcPrivateSubnet1RouteTableB41A48CC",
+        },
+        "SubnetId": Object {
+          "Ref": "vpcPrivateSubnet1Subnet934893E8",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "vpcPrivateSubnet1RouteTableB41A48CC": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "demo-stack/vpc/PrivateSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "vpcPrivateSubnet1Subnet934893E8": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            0,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.128.0/18",
+        "MapPublicIpOnLaunch": false,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "demo-stack/vpc/PrivateSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "vpcPrivateSubnet2DefaultRouteB0E07F99": Object {
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": Object {
+          "Ref": "vpcPublicSubnet2NATGateway9B8AE11A",
+        },
+        "RouteTableId": Object {
+          "Ref": "vpcPrivateSubnet2RouteTable7280F23E",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "vpcPrivateSubnet2RouteTable7280F23E": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "demo-stack/vpc/PrivateSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "vpcPrivateSubnet2RouteTableAssociation007E94D3": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "vpcPrivateSubnet2RouteTable7280F23E",
+        },
+        "SubnetId": Object {
+          "Ref": "vpcPrivateSubnet2Subnet7031C2BA",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "vpcPrivateSubnet2Subnet7031C2BA": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            1,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.192.0/18",
+        "MapPublicIpOnLaunch": false,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "demo-stack/vpc/PrivateSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "vpcPublicSubnet1DefaultRoute10708846": Object {
+      "DependsOn": Array [
+        "vpcVPCGW7984C166",
+      ],
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": Object {
+          "Ref": "vpcIGWE57CBDCA",
+        },
+        "RouteTableId": Object {
+          "Ref": "vpcPublicSubnet1RouteTable48A2DF9B",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "vpcPublicSubnet1EIPDA49DCBE": Object {
+      "Properties": Object {
+        "Domain": "vpc",
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "demo-stack/vpc/PublicSubnet1",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::EIP",
+    },
+    "vpcPublicSubnet1NATGateway9C16659E": Object {
+      "Properties": Object {
+        "AllocationId": Object {
+          "Fn::GetAtt": Array [
+            "vpcPublicSubnet1EIPDA49DCBE",
+            "AllocationId",
+          ],
+        },
+        "SubnetId": Object {
+          "Ref": "vpcPublicSubnet1Subnet2E65531E",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "demo-stack/vpc/PublicSubnet1",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::NatGateway",
+    },
+    "vpcPublicSubnet1RouteTable48A2DF9B": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "demo-stack/vpc/PublicSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "vpcPublicSubnet1RouteTableAssociation5D3F4579": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "vpcPublicSubnet1RouteTable48A2DF9B",
+        },
+        "SubnetId": Object {
+          "Ref": "vpcPublicSubnet1Subnet2E65531E",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "vpcPublicSubnet1Subnet2E65531E": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            0,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.0.0/18",
+        "MapPublicIpOnLaunch": true,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "demo-stack/vpc/PublicSubnet1",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "vpcPublicSubnet2DefaultRouteA1EC0F60": Object {
+      "DependsOn": Array [
+        "vpcVPCGW7984C166",
+      ],
+      "Properties": Object {
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": Object {
+          "Ref": "vpcIGWE57CBDCA",
+        },
+        "RouteTableId": Object {
+          "Ref": "vpcPublicSubnet2RouteTableEB40D4CB",
+        },
+      },
+      "Type": "AWS::EC2::Route",
+    },
+    "vpcPublicSubnet2EIP9B3743B1": Object {
+      "Properties": Object {
+        "Domain": "vpc",
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "demo-stack/vpc/PublicSubnet2",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::EIP",
+    },
+    "vpcPublicSubnet2NATGateway9B8AE11A": Object {
+      "Properties": Object {
+        "AllocationId": Object {
+          "Fn::GetAtt": Array [
+            "vpcPublicSubnet2EIP9B3743B1",
+            "AllocationId",
+          ],
+        },
+        "SubnetId": Object {
+          "Ref": "vpcPublicSubnet2Subnet009B674F",
+        },
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "demo-stack/vpc/PublicSubnet2",
+          },
+        ],
+      },
+      "Type": "AWS::EC2::NatGateway",
+    },
+    "vpcPublicSubnet2RouteTableAssociation21F81B59": Object {
+      "Properties": Object {
+        "RouteTableId": Object {
+          "Ref": "vpcPublicSubnet2RouteTableEB40D4CB",
+        },
+        "SubnetId": Object {
+          "Ref": "vpcPublicSubnet2Subnet009B674F",
+        },
+      },
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+    },
+    "vpcPublicSubnet2RouteTableEB40D4CB": Object {
+      "Properties": Object {
+        "Tags": Array [
+          Object {
+            "Key": "Name",
+            "Value": "demo-stack/vpc/PublicSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::RouteTable",
+    },
+    "vpcPublicSubnet2Subnet009B674F": Object {
+      "Properties": Object {
+        "AvailabilityZone": Object {
+          "Fn::Select": Array [
+            1,
+            Object {
+              "Fn::GetAZs": "",
+            },
+          ],
+        },
+        "CidrBlock": "10.0.64.0/18",
+        "MapPublicIpOnLaunch": true,
+        "Tags": Array [
+          Object {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public",
+          },
+          Object {
+            "Key": "Name",
+            "Value": "demo-stack/vpc/PublicSubnet2",
+          },
+        ],
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::Subnet",
+    },
+    "vpcVPCGW7984C166": Object {
+      "Properties": Object {
+        "InternetGatewayId": Object {
+          "Ref": "vpcIGWE57CBDCA",
+        },
+        "VpcId": Object {
+          "Ref": "vpcA2121C38",
+        },
+      },
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+    },
+  },
+  "Rules": Object {
+    "CheckBootstrapVersion": Object {
+      "Assertions": Array [
+        Object {
+          "Assert": Object {
+            "Fn::Not": Array [
+              Object {
+                "Fn::Contains": Array [
+                  Array [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  Object {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
