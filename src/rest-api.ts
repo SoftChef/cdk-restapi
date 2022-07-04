@@ -145,16 +145,37 @@ export class RestApi extends Construct {
     if (resource.lambdaFunction) {
       integration = new LambdaIntegration(resource.lambdaFunction);
     } else if (resource.networkLoadBalancer) {
+      const pathParameters = resource.path.match(/\/\{[\w]*\}/g) ?? [];
+      const queryParameters = resource.path.match(/[\w]*=\{[\w]*\}/g) ?? [];
+      const methodRequestParameters: {
+        [key: string]: boolean;
+      } = {};
+      const integrationRequestParameters: {
+        [key: string]: string;
+      } = {};
+      for (const pathParameter of pathParameters) {
+        const [, key] = pathParameter.match(/\/\{([\w]*)\}/) ?? [];
+        methodRequestParameters[`method.request.path.${key}`] = true;
+        integrationRequestParameters[`integration.request.path.${key}`] = `method.request.path.${key}`;
+      }
+      for (const queryParameter of queryParameters) {
+        const [, key] = queryParameter.match(/[\w]*=\{([\w]*[\?]?)\}/) ?? [];
+        const keyName = key.replace(/\?$/, '');
+        methodRequestParameters[`method.request.querystring.${keyName}`] = /\?$/.test(key);
+        integrationRequestParameters[`integration.request.querystring.${keyName}`] = `method.request.querystring.${keyName}`;
+      }
+      methodOptions.pathParameters = methodRequestParameters;
       integration = new Integration({
         type: resource.vpcLink ? IntegrationType.HTTP : IntegrationType.HTTP_PROXY,
         integrationHttpMethod: resource.httpMethod.toString(),
-        uri: `http://${resource.networkLoadBalancer.loadBalancerDnsName}${resource.path}`,
+        uri: `http://${resource.networkLoadBalancer.loadBalancerDnsName}${resource.path.replace(/\?.*/, '')}`,
         options: {
           connectionType: ConnectionType.VPC_LINK,
           vpcLink: resource.vpcLink ?? resource.vpcLinkProxy,
           integrationResponses: [{
             statusCode: '200',
           }],
+          requestParameters: integrationRequestParameters,
           ...resource.vpcLinkIntegrationOptions,
         },
       });
@@ -192,6 +213,13 @@ export class RestApi extends Construct {
       {
         ...resource.methodOptions,
         ...<MethodOptions> methodOptions,
+        // requestParameters: {
+        // 'method.request.path.xxx': true,
+        // 'method.request.querystring.yyy': true,
+        // 'method.request.querystring.zzz': false,
+        // 'integration.request.path.xxx': 'method.request.path.xxx',
+        // 'integration.request.querystring.yyy': 'method.request.querystring.yyy',
+        // },
       },
     );
     return this;
