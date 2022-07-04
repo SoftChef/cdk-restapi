@@ -213,13 +213,6 @@ export class RestApi extends Construct {
       {
         ...resource.methodOptions,
         ...<MethodOptions> methodOptions,
-        // requestParameters: {
-        // 'method.request.path.xxx': true,
-        // 'method.request.querystring.yyy': true,
-        // 'method.request.querystring.zzz': false,
-        // 'integration.request.path.xxx': 'method.request.path.xxx',
-        // 'integration.request.querystring.yyy': 'method.request.querystring.yyy',
-        // },
       },
     );
     return this;
