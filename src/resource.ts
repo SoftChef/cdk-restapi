@@ -56,6 +56,30 @@ export interface RestApiResourceProps {
    * Specify NLB with VPC Link to integration
    * Only supported Network Load Balancer
    * https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-vs-rest.html#http-api-vs-rest.differences.management
+   * The VPCLink / VPCLinkProxy & NetworkLoadBalancer are Integration Helper
+   * You can define the path like example will automatically identify
+   * pathParameters & queryStringParameters to add "RequestParameters" mapping to your origin service
+   * example: /groups/{groupId}/users/{userId}?type={type}&enabled={enabled?}
+   * the "enabled" has "?", it's be optional.
+   * ```
+    {
+      Integration: {
+        Options: {
+          RequestParameters: {
+            'integration.request.path.groupId': 'method.request.path.groupId',
+            'integration.request.path.userId': 'method.request.path.userId',
+            'integration.request.querystring.type': 'method.request.querystring.type',
+            'integration.request.querystring.enabled': 'method.request.querystring.enabled',
+          }
+        }
+      },
+      RequestParameter: {
+        'method.request.path.groupId': true,
+        'method.request.path.userId': true,
+        'method.request.querystring.type': true,
+        'method.request.querystring.enabled': false,
+      }
+    }```
    */
   readonly networkLoadBalancer?: INetworkLoadBalancer;
   /**
