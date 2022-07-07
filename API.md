@@ -86,12 +86,31 @@ new RestApi(scope: Construct, id: string, props: RestApiProps)
 * **scope** (<code>[Construct](#constructs-construct)</code>)  *No description*
 * **id** (<code>string</code>)  *No description*
 * **props** (<code>[RestApiProps](#softchef-cdk-restapi-restapiprops)</code>)  *No description*
+  * **defaultCorsPreflightOptions** (<code>[aws_apigateway.CorsOptions](#aws-cdk-lib-aws-apigateway-corsoptions)</code>)  Adds a CORS preflight OPTIONS method to this resource and all child resources. __*Default*__: CORS is disabled
+  * **defaultIntegration** (<code>[aws_apigateway.Integration](#aws-cdk-lib-aws-apigateway-integration)</code>)  An integration to use as a default for all methods created within this API unless an integration is specified. __*Default*__: Inherited from parent.
+  * **defaultMethodOptions** (<code>[aws_apigateway.MethodOptions](#aws-cdk-lib-aws-apigateway-methodoptions)</code>)  Method options to use as a default for all methods created within this API unless custom options are specified. __*Default*__: Inherited from parent.
+  * **cloudWatchRole** (<code>boolean</code>)  Automatically configure an AWS CloudWatch role for API Gateway. __*Default*__: true
+  * **deploy** (<code>boolean</code>)  Indicates if a Deployment should be automatically created for this API, and recreated when the API model (resources, methods) changes. __*Default*__: true
+  * **deployOptions** (<code>[aws_apigateway.StageOptions](#aws-cdk-lib-aws-apigateway-stageoptions)</code>)  Options for the API Gateway stage that will always point to the latest deployment when `deploy` is enabled. __*Default*__: Based on defaults of `StageOptions`.
+  * **disableExecuteApiEndpoint** (<code>boolean</code>)  Specifies whether clients can invoke the API using the default execute-api endpoint. __*Default*__: false
+  * **domainName** (<code>[aws_apigateway.DomainNameOptions](#aws-cdk-lib-aws-apigateway-domainnameoptions)</code>)  Configure a custom domain name and map it to this API. __*Default*__: no domain name is defined, use `addDomainName` or directly define a `DomainName`.
+  * **endpointExportName** (<code>string</code>)  Export name for the CfnOutput containing the API endpoint. __*Default*__: when no export name is given, output will be created without export
+  * **endpointTypes** (<code>Array<[aws_apigateway.EndpointType](#aws-cdk-lib-aws-apigateway-endpointtype)></code>)  A list of the endpoint types of the API. __*Default*__: EndpointType.EDGE
+  * **failOnWarnings** (<code>boolean</code>)  Indicates whether to roll back the resource if a warning occurs while API Gateway is creating the RestApi resource. __*Default*__: false
+  * **parameters** (<code>Map<string, string></code>)  Custom header parameters for the request. __*Default*__: No parameters.
+  * **policy** (<code>[aws_iam.PolicyDocument](#aws-cdk-lib-aws-iam-policydocument)</code>)  A policy document that contains the permissions for this RestApi. __*Default*__: No policy.
+  * **restApiName** (<code>string</code>)  A name for the API Gateway RestApi resource. __*Default*__: ID of the RestApi construct.
+  * **retainDeployments** (<code>boolean</code>)  Retains old deployment resources when the API changes. __*Default*__: false
+  * **apiKeySourceType** (<code>[aws_apigateway.ApiKeySourceType](#aws-cdk-lib-aws-apigateway-apikeysourcetype)</code>)  The source of the API key for metering requests according to a usage plan. __*Default*__: Metering is disabled.
+  * **binaryMediaTypes** (<code>Array<string></code>)  The list of binary media mime-types that are supported by the RestApi resource, such as "image/png" or "application/octet-stream". __*Default*__: RestApi supports only UTF-8-encoded text payloads.
+  * **cloneFrom** (<code>[aws_apigateway.IRestApi](#aws-cdk-lib-aws-apigateway-irestapi)</code>)  The ID of the API Gateway RestApi resource that you want to clone. __*Default*__: None.
+  * **description** (<code>string</code>)  A description of the purpose of this API Gateway RestApi resource. __*Default*__: No description.
+  * **endpointConfiguration** (<code>[aws_apigateway.EndpointConfiguration](#aws-cdk-lib-aws-apigateway-endpointconfiguration)</code>)  The EndpointConfiguration property type specifies the endpoint types of a REST API. __*Default*__: EndpointType.EDGE
+  * **minimumCompressionSize** (<code>number</code>)  A nullable integer that is used to enable compression (with non-negative between 0 and 10485760 (10M) bytes, inclusive) or disable compression (when undefined) on an API. __*Default*__: Compression is disabled.
   * **resources** (<code>Array<[RestApiResourceProps](#softchef-cdk-restapi-restapiresourceprops)></code>)  Define Rest API resources. 
   * **authorizationType** (<code>[aws_apigateway.AuthorizationType](#aws-cdk-lib-aws-apigateway-authorizationtype)</code>)  Specify globally AuthorizationType by aws-apigateway.AuthorizationType, default is NONE. __*Optional*__
   * **authorizer** (<code>[aws_apigateway.IAuthorizer](#aws-cdk-lib-aws-apigateway-iauthorizer)</code>)  Specify globally Authorizer by aws-Authorizer, default is null. __*Optional*__
-  * **deployOptions** (<code>[aws_apigateway.StageOptions](#aws-cdk-lib-aws-apigateway-stageoptions)</code>)  Specify StageOptions. __*Optional*__
   * **enableCors** (<code>boolean</code>)  Enable cors, default is true. __*Optional*__
-  * **endpointConfiguration** (<code>[aws_apigateway.EndpointConfiguration](#aws-cdk-lib-aws-apigateway-endpointconfiguration)</code>)  Specify EndpointConfiguration. __*Optional*__
   * **restApi** (<code>[aws_apigateway.RestApi](#aws-cdk-lib-aws-apigateway-restapi)</code>)  Custom RestApi. __*Optional*__
 
 
@@ -156,12 +175,31 @@ __Returns__:
 Name | Type | Description 
 -----|------|-------------
 **resources** | <code>Array<[RestApiResourceProps](#softchef-cdk-restapi-restapiresourceprops)></code> | Define Rest API resources.
+**apiKeySourceType**? | <code>[aws_apigateway.ApiKeySourceType](#aws-cdk-lib-aws-apigateway-apikeysourcetype)</code> | The source of the API key for metering requests according to a usage plan.<br/>__*Default*__: Metering is disabled.
 **authorizationType**? | <code>[aws_apigateway.AuthorizationType](#aws-cdk-lib-aws-apigateway-authorizationtype)</code> | Specify globally AuthorizationType by aws-apigateway.AuthorizationType, default is NONE.<br/>__*Optional*__
 **authorizer**? | <code>[aws_apigateway.IAuthorizer](#aws-cdk-lib-aws-apigateway-iauthorizer)</code> | Specify globally Authorizer by aws-Authorizer, default is null.<br/>__*Optional*__
-**deployOptions**? | <code>[aws_apigateway.StageOptions](#aws-cdk-lib-aws-apigateway-stageoptions)</code> | Specify StageOptions.<br/>__*Optional*__
+**binaryMediaTypes**? | <code>Array<string></code> | The list of binary media mime-types that are supported by the RestApi resource, such as "image/png" or "application/octet-stream".<br/>__*Default*__: RestApi supports only UTF-8-encoded text payloads.
+**cloneFrom**? | <code>[aws_apigateway.IRestApi](#aws-cdk-lib-aws-apigateway-irestapi)</code> | The ID of the API Gateway RestApi resource that you want to clone.<br/>__*Default*__: None.
+**cloudWatchRole**? | <code>boolean</code> | Automatically configure an AWS CloudWatch role for API Gateway.<br/>__*Default*__: true
+**defaultCorsPreflightOptions**? | <code>[aws_apigateway.CorsOptions](#aws-cdk-lib-aws-apigateway-corsoptions)</code> | Adds a CORS preflight OPTIONS method to this resource and all child resources.<br/>__*Default*__: CORS is disabled
+**defaultIntegration**? | <code>[aws_apigateway.Integration](#aws-cdk-lib-aws-apigateway-integration)</code> | An integration to use as a default for all methods created within this API unless an integration is specified.<br/>__*Default*__: Inherited from parent.
+**defaultMethodOptions**? | <code>[aws_apigateway.MethodOptions](#aws-cdk-lib-aws-apigateway-methodoptions)</code> | Method options to use as a default for all methods created within this API unless custom options are specified.<br/>__*Default*__: Inherited from parent.
+**deploy**? | <code>boolean</code> | Indicates if a Deployment should be automatically created for this API, and recreated when the API model (resources, methods) changes.<br/>__*Default*__: true
+**deployOptions**? | <code>[aws_apigateway.StageOptions](#aws-cdk-lib-aws-apigateway-stageoptions)</code> | Options for the API Gateway stage that will always point to the latest deployment when `deploy` is enabled.<br/>__*Default*__: Based on defaults of `StageOptions`.
+**description**? | <code>string</code> | A description of the purpose of this API Gateway RestApi resource.<br/>__*Default*__: No description.
+**disableExecuteApiEndpoint**? | <code>boolean</code> | Specifies whether clients can invoke the API using the default execute-api endpoint.<br/>__*Default*__: false
+**domainName**? | <code>[aws_apigateway.DomainNameOptions](#aws-cdk-lib-aws-apigateway-domainnameoptions)</code> | Configure a custom domain name and map it to this API.<br/>__*Default*__: no domain name is defined, use `addDomainName` or directly define a `DomainName`.
 **enableCors**? | <code>boolean</code> | Enable cors, default is true.<br/>__*Optional*__
-**endpointConfiguration**? | <code>[aws_apigateway.EndpointConfiguration](#aws-cdk-lib-aws-apigateway-endpointconfiguration)</code> | Specify EndpointConfiguration.<br/>__*Optional*__
+**endpointConfiguration**? | <code>[aws_apigateway.EndpointConfiguration](#aws-cdk-lib-aws-apigateway-endpointconfiguration)</code> | The EndpointConfiguration property type specifies the endpoint types of a REST API.<br/>__*Default*__: EndpointType.EDGE
+**endpointExportName**? | <code>string</code> | Export name for the CfnOutput containing the API endpoint.<br/>__*Default*__: when no export name is given, output will be created without export
+**endpointTypes**? | <code>Array<[aws_apigateway.EndpointType](#aws-cdk-lib-aws-apigateway-endpointtype)></code> | A list of the endpoint types of the API.<br/>__*Default*__: EndpointType.EDGE
+**failOnWarnings**? | <code>boolean</code> | Indicates whether to roll back the resource if a warning occurs while API Gateway is creating the RestApi resource.<br/>__*Default*__: false
+**minimumCompressionSize**? | <code>number</code> | A nullable integer that is used to enable compression (with non-negative between 0 and 10485760 (10M) bytes, inclusive) or disable compression (when undefined) on an API.<br/>__*Default*__: Compression is disabled.
+**parameters**? | <code>Map<string, string></code> | Custom header parameters for the request.<br/>__*Default*__: No parameters.
+**policy**? | <code>[aws_iam.PolicyDocument](#aws-cdk-lib-aws-iam-policydocument)</code> | A policy document that contains the permissions for this RestApi.<br/>__*Default*__: No policy.
 **restApi**? | <code>[aws_apigateway.RestApi](#aws-cdk-lib-aws-apigateway-restapi)</code> | Custom RestApi.<br/>__*Optional*__
+**restApiName**? | <code>string</code> | A name for the API Gateway RestApi resource.<br/>__*Default*__: ID of the RestApi construct.
+**retainDeployments**? | <code>boolean</code> | Retains old deployment resources when the API changes.<br/>__*Default*__: false
 
 
 
