@@ -120,6 +120,7 @@ new RestApi(scope: Construct, id: string, props: RestApiProps)
 
 Name | Type | Description 
 -----|------|-------------
+**restApi** | <code>[aws_apigateway.RestApi](#aws-cdk-lib-aws-apigateway-restapi)</code> | <span></span>
 **restApiId** | <code>string</code> | <span></span>
 **url** | <code>string</code> | <span></span>
 
