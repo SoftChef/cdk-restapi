@@ -97,6 +97,10 @@ export class RestApi extends Construct {
     this.addResources(props.resources);
   }
 
+  get restApi(): AwsRestApi {
+    return this.awsRestApi;
+  }
+
   get restApiId(): string {
     return this.awsRestApi.restApiId;
   }
