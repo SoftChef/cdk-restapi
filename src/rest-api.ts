@@ -162,7 +162,10 @@ export class RestApi extends Construct {
         methodRequestParameters[`method.request.querystring.${keyName}`] = /\?$/.test(key);
         integrationRequestParameters[`integration.request.querystring.${keyName}`] = `method.request.querystring.${keyName}`;
       }
-      methodOptions.requestParameters = methodRequestParameters;
+      methodOptions.requestParameters = {
+        ...methodRequestParameters,
+        ...resource.methodOptions?.requestParameters,
+      };
       integration = new Integration({
         type: resource.vpcLink ? IntegrationType.HTTP : IntegrationType.HTTP_PROXY,
         integrationHttpMethod: resource.httpMethod.toString(),
@@ -177,9 +180,12 @@ export class RestApi extends Construct {
           ...resource.vpcLinkIntegrationOptions,
         },
       });
-      methodOptions.methodResponses = [{
-        statusCode: '200',
-      }];
+      methodOptions.methodResponses = [
+        {
+          statusCode: '200',
+        },
+        ...(resource.methodOptions?.methodResponses ? resource.methodOptions?.methodResponses : []),
+      ];
     } else if (resource.integration) {
       integration = resource.integration;
     } else {
